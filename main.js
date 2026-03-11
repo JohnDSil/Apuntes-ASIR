@@ -25,14 +25,29 @@ async function cargarSistema() {
         
         renderizarPortada(window.datosAsignaturas);
 
-        // Lógica del buscador y diccionario
-        inputBuscador.addEventListener('input', (e) => {
-            const val = e.target.value.toLowerCase();
-            
-            // Notificación si es un comando conocido
-            if (comandoDiccionario[val]) {
-                mostrarNotificacion(comandoDiccionario[val]);
-            }
+      inputBuscador.addEventListener('input', (e) => {
+    const val = e.target.value.toLowerCase();
+    
+    // Si escribe "osi", sabe que es de PAR (Redes)
+    if (val === "osi" || val === "ping" || val === "ipconfig") {
+        mostrarNotificacion(comandoDiccionario[val], 'PAR');
+    } 
+    // Si escribe "sql", sabe que es de GBD
+    else if (val === "sql") {
+        mostrarNotificacion(comandoDiccionario[val], 'GBD');
+    }
+    // Para otros comandos del diccionario
+    else if (comandoDiccionario[val]) {
+        mostrarNotificacion(comandoDiccionario[val], 'GENERIC');
+    }
+
+    // Filtrado de tarjetas normal
+    const filtrados = window.datosAsignaturas.filter(a => 
+        a.nombre.toLowerCase().includes(val) || 
+        a.siglas.toLowerCase().includes(val)
+    );
+    renderizarPortada(filtrados);
+});
 
             // Filtrado de tarjetas
             const filtrados = window.datosAsignaturas.filter(a => 
