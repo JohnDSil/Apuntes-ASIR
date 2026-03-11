@@ -3,70 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>⚙️ Archivo Mecánico</title>
+    <title>S.I.L.V.A. MAINCORE</title>
     <style>
-        :root { --cian: #00ffff; --cobre: #e68a00; --fondo: #0a0a0a; --texto: #d1d1d1; }
-        body { background-color: var(--fondo); color: var(--texto); font-family: 'Courier New', monospace; margin: 0; }
+        :root { --cian: #00ffff; --cobre: #e68a00; --fondo: #050505; --neon: rgba(0, 255, 255, 0.4); }
+        body { background: var(--fondo); color: #d1d1d1; font-family: 'Courier New', monospace; margin: 0; overflow-x: hidden; }
+        
+        /* Cabecera Futurista */
         .page-header { 
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('header-bg.jpg');
-            background-size: cover; background-position: center;
-            padding: 60px 20px; text-align: center; border-bottom: 3px solid var(--cobre);
-            box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+            border-bottom: 2px solid var(--cobre); padding: 40px; text-align: center;
+            background: linear-gradient(to bottom, #111, var(--fondo));
+            box-shadow: 0 0 20px var(--cobre);
         }
-        h1 { color: var(--cobre); text-shadow: 0 0 10px var(--cobre); margin: 0; }
+        h1 { color: var(--cian); text-shadow: 0 0 10px var(--cian); letter-spacing: 5px; margin: 0; }
+        
+        /* Buscador Tipo Consola */
+        #buscador {
+            background: #000; border: 1px solid var(--cian); color: var(--cian);
+            padding: 12px; width: 350px; margin-top: 20px; font-family: monospace;
+            box-shadow: 0 0 10px var(--neon); outline: none;
+        }
+
+        /* Grid de Datos */
         #grid-apuntes { 
             display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
-            gap: 25px; padding: 40px; max-width: 1200px; margin: auto; 
+            gap: 20px; padding: 40px; 
         }
+
+        /* Tarjetas "Cyber-Panel" */
         .card { 
-            border: 2px solid var(--cobre); background: rgba(20, 20, 20, 0.8); 
-            padding: 20px; transition: 0.3s; position: relative; overflow: hidden;
+            border: 1px solid var(--cian); background: rgba(0, 20, 20, 0.8); 
+            padding: 20px; transition: 0.3s; position: relative;
         }
-        .card:hover { border-color: var(--cian); box-shadow: 0 0 15px var(--cian); transform: translateY(-5px); }
-        .badge { color: var(--cian); font-size: 0.7em; letter-spacing: 2px; font-weight: bold; }
+        .card:hover { box-shadow: 0 0 20px var(--cian); transform: scale(1.02); }
+        .card h2 { color: var(--cobre); margin-top: 0; }
+        .badge { color: var(--cian); font-size: 0.7em; border: 1px solid var(--cian); padding: 2px 5px; display: inline-block; }
+
+        /* Botones Interactivos */
         .btn { 
-            display: inline-block; margin-top: 15px; padding: 10px 20px;
-            border: 1px solid var(--cian); color: var(--cian); text-decoration: none;
-            transition: 0.3s; font-weight: bold;
+            background: transparent; border: 1px solid var(--cian); color: var(--cian);
+            padding: 8px 15px; cursor: pointer; text-decoration: none; font-weight: bold;
         }
-        .btn:hover { background: var(--cian); color: var(--fondo); }
-        #buscador {
-    width: 60%;
-    background: #000;
-    border: 2px solid var(--cobre);
-    color: var(--cian);
-    padding: 15px;
-    font-size: 1.2em;
-    outline: none;
-    box-shadow: inset 0 0 10px var(--cobre);
-    transition: 0.3s;
-}
+        .btn:hover { background: var(--cian); color: #000; box-shadow: 0 0 10px var(--cian); }
 
-#buscador:focus {
-    border-color: var(--cian);
-    box-shadow: 0 0 15px var(--cian);
-}
-
-.terminal-msg {
-    color: #888;
-    font-size: 0.8em;
-    margin-top: 5px;
-}
+        /* Visor de PDFs */
+        #visor-pdf { border: 1px solid var(--cian); background: #000; height: 600px; box-shadow: 0 0 20px var(--neon); }
     </style>
 </head>
 <body>
     <header class="page-header">
-    <h1>⚙️ ARCHIVO MECÁNICO</h1>
-    <p>Consola de Datos ASIR</p>
-    <div style="margin-top: 20px;">
-        <input type="text" id="buscador" placeholder="🔍 Buscar asignatura o unidad..." 
-               style="padding: 10px; width: 300px; border: 1px solid var(--cian); background: #000; color: var(--cian); font-family: monospace;">
-    </div>
-</header>
+        <h1>[ ARCHIVO MECÁNICO S.I.L.V.A. ]</h1>
+        <input type="text" id="buscador" placeholder="> ESCANEAR SISTEMA...">
+    </header>
 
-   <main id="grid-apuntes">
-    </main>
-        </main>
+    <main id="grid-apuntes"></main>
 
     <script src="main.js"></script>
 </body>
