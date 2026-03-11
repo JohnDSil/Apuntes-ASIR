@@ -1,24 +1,30 @@
-# 🛡️ Formación Profesional: 1º ASIR 
-> Repositorio personal de apuntes, prácticas y configuraciones del Sr. Silva.
+# 🖥️ Portal de Apuntes - 1º ASIR
+> **Estudiante:** Sr. Silva  
+> **Curso:** 2025/2026  
+> *Repositorio centralizado de documentación técnica, prácticas y scripts.*
 
 ---
 
-### 📚 Asignaturas y Acceso Rápido
-Haga clic en el nombre de la asignatura para ir a sus apuntes:
+## 📂 Índice de Asignaturas
+Selecciona una asignatura para ver los apuntes detallados:
 
-* [📂 **Hardware**](./Hardware) - Montaje, periféricos y electricidad.
-* [📂 **ISO**](./ISO) - Instalación y configuración de S.O. (Windows/Linux).
-* [📂 **Bases de Datos**](./Base_de_Datos) - Diseño E/R y lenguaje SQL.
-* [📂 **Marcas**](./Lenguaje_Marcas) - HTML5, XML y XSLT.
-* [📂 **Redes**](./Redes) - Packet Tracer, direccionamiento IP y protocolos.
+| Asignatura | Descripción | Estado | Acceso |
+| :--- | :--- | :--- | :--- |
+| **ISO** | Implantación de S.O. | 🟢 Al día | [Ver Apuntes](./ISO/) |
+| **PAR** | Redes | 🟡 Actualizando | [Ver Apuntes](./Redes/) |
+| **BD** | Bases de Datos | 🔵 Prácticas | [Ver Apuntes](./Base_de_Datos/) |
+| **LMSGI** | Lenguaje de Marcas | 🟢 Al día | [Ver Apuntes](./Lenguaje_Marcas/) |
+| **FH** | Hardware | ⚪ Pendiente | [Ver Apuntes](./Hardware/) |
+
+---
+
+## 🛠️ Stack Tecnológico de 1º
+En este curso estamos trabajando con:
+* **Sistemas:** `Linux (Debian/Ubuntu)` & `Windows Server 2022`
+* **Redes:** `Cisco Packet Tracer` & `Wireshark`
+* **Bases de Datos:** `MySQL` & `DBEaver`
+* **Web:** `HTML5`, `CSS3` y `XML`
 
 ---
 
-### 🛠️ Herramientas Utilizadas en el Curso
-![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
-![Windows](https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white)
-![MySQL](https://img.shields.io/badge/MySQL-00000F?style=for-the-badge&logo=mysql&logoColor=white)
-![Cisco](https://img.shields.io/badge/Cisco-049fd9?style=for-the-badge&logo=cisco&logoColor=white)
-
----
-🚀 *Meta: Convertirme en un Administrador de Sistemas Senior.*
+_Generado automáticamente con GitHub Pages - Jarvis AI Assistant_
