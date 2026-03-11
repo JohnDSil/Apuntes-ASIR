@@ -3,131 +3,119 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S.I.L.V.A. Academy // ASIR</title>
+    <title>S.I.L.V.A. Academy // Gestión ASIR</title>
     <link rel="icon" href="data:,">
     <style>
         :root {
             --bg-dark: #000000;
-            --card-bg: #1a1a1a;
+            --card-bg: #111111;
             --accent: #00a3ff;
             --text-main: #ffffff;
-            --text-muted: #a0a0a0;
-            --border: #333333;
+            --text-muted: #888888;
+            --border: #222222;
+            --success: #00ff41;
         }
 
         body { 
             background-color: var(--bg-dark); 
             color: var(--text-main); 
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; 
-            margin: 0; 
-            -webkit-font-smoothing: antialiased;
+            font-family: 'Inter', system-ui, sans-serif; 
+            margin: 0; overflow-x: hidden;
         }
 
-        header { 
-            padding: 4rem 2rem 2rem 2rem;
-            text-align: center;
-            max-width: 800px;
-            margin: auto;
+        header { padding: 3rem 2rem; text-align: center; border-bottom: 1px solid var(--border); }
+        
+        #system-status {
+            font-family: 'Fira Code', monospace; font-size: 0.7rem;
+            color: var(--accent); margin-bottom: 1rem;
+            display: flex; justify-content: center; gap: 20px;
         }
 
-        .logo { 
-            font-size: 2.5rem; 
-            font-weight: 800; 
-            letter-spacing: -2px; 
-            margin-bottom: 1rem;
-        }
+        .logo { font-size: 2rem; font-weight: 800; letter-spacing: -1.5px; }
 
         #buscador {
-            background: var(--card-bg);
-            border: 2px solid var(--border);
-            border-radius: 12px;
-            color: white;
-            padding: 1rem 1.5rem;
-            width: 100%;
-            max-width: 500px;
-            font-size: 1rem;
-            transition: border-color 0.3s ease;
-            margin-top: 1rem;
+            background: var(--card-bg); border: 1px solid var(--border);
+            border-radius: 8px; color: white; padding: 0.8rem 1.2rem;
+            width: 100%; max-width: 450px; font-size: 0.9rem; margin-top: 1rem;
+            transition: 0.3s;
         }
-
         #buscador:focus { border-color: var(--accent); outline: none; }
 
         #grid-apuntes { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
-            gap: 1.5rem; 
-            padding: 2rem; 
-            max-width: 1200px; 
-            margin: auto;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+            gap: 1.5rem; padding: 2rem; max-width: 1200px; margin: auto;
+            padding-bottom: 180px; /* Espacio para la consola */
         }
 
         .card { 
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 2rem;
-            text-align: left;
-            transition: transform 0.2s ease, border-color 0.2s ease;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            background: var(--card-bg); border: 1px solid var(--border);
+            border-radius: 12px; padding: 1.5rem; transition: 0.3s;
+            display: flex; flex-direction: column; justify-content: space-between;
         }
-
-        .card:hover { 
-            transform: translateY(-5px);
-            border-color: var(--accent);
-        }
-
-        .card h2 { margin: 0 0 0.75rem 0; font-size: 1.5rem; font-weight: 700; }
-        .card p { color: var(--text-muted); font-size: 1rem; line-height: 1.5; margin-bottom: 2rem; }
+        .card:hover { border-color: var(--accent); transform: translateY(-3px); }
+        .card h2 { margin: 0.5rem 0; font-size: 1.3rem; }
+        .card p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem; }
 
         .btn { 
-            background: var(--accent); 
-            color: #fff; 
-            border: none; 
-            padding: 0.8rem 1.5rem; 
-            border-radius: 10px; 
-            cursor: pointer; 
-            font-weight: 700; 
-            font-size: 0.9rem;
-            width: fit-content;
+            background: var(--accent); color: #fff; border: none; 
+            padding: 0.6rem 1rem; border-radius: 6px; cursor: pointer; 
+            font-weight: 700; font-size: 0.8rem;
         }
 
-        /* Estilo Dashboard "MoureDev" */
-        .dashboard-container { display: grid; grid-template-columns: 320px 1fr; min-height: 100vh; }
-        .sidebar { background: var(--bg-dark); border-right: 1px solid var(--border); padding: 2rem; }
+        /* Dashboard & Sidebar */
+        .dashboard-container { display: grid; grid-template-columns: 280px 1fr; height: calc(100vh - 150px); }
+        .sidebar { background: #050505; border-right: 1px solid var(--border); padding: 1.5rem; overflow-y: auto; }
         .unit-item { 
-            padding: 1rem; 
-            margin-bottom: 0.75rem; 
-            border-radius: 12px; 
-            cursor: pointer; 
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            transition: 0.2s;
+            padding: 0.8rem; margin-bottom: 0.5rem; border-radius: 8px;
+            background: #111; border: 1px solid #222; cursor: pointer; font-size: 0.85rem;
         }
-        .unit-item:hover { border-color: var(--accent); color: var(--accent); }
-        #visor-pdf { background: #121212; position: relative; }
+        .unit-item:hover { border-color: var(--accent); }
+
+        #visor-pdf { background: #000; overflow: hidden; position: relative; }
+
+        /* Consola de Logs */
+        #console-logs {
+            position: fixed; bottom: 0; left: 0; right: 0;
+            height: 140px; background: #050505; border-top: 1px solid var(--border);
+            font-family: 'monospace'; font-size: 0.75rem; padding: 1rem;
+            color: var(--success); overflow-y: auto; z-index: 5000;
+        }
+
+        /* Modal Calculadora */
+        #modal-calc {
+            display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%);
+            background:var(--card-bg); border:1px solid var(--accent); padding:2rem;
+            border-radius:12px; z-index:6000; width: 350px;
+        }
+        #modal-calc input { background: #000; border: 1px solid #333; color: #fff; padding: 0.5rem; width: 90%; }
     </style>
 </head>
 <body>
     <header>
-        <div class="logo">S.I.L.V.A.<span style="color:var(--accent)">.</span></div>
-        <p style="color:var(--text-muted)">Apuntes de ASIR</p>
-        <input type="text" id="buscador" placeholder="Buscar asignatura o comando...">
-        <div id="system-status" style="font-family: monospace; font-size: 0.75rem; color: var(--accent); margin-bottom: 1rem; display: flex; justify-content: center; gap: 20px;">
-    <span>STATUS: ONLINE</span>
-    <span>UPTIME: <span id="uptime-clock">00:00:00</span></span>
-    <span>DATABASE: 30Q LOADED</span>
-</div>
-
-<div id="modal-calc" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background:var(--card-bg); border:2px solid var(--accent); padding:2rem; border-radius:16px; z-index:3000; box-shadow:0 0 50px rgba(0,0,0,0.8);">
-    <h3 style="margin-top:0">Calculadora de Subredes ASIR</h3>
-    <input type="text" id="ip-input" placeholder="Ej: 192.168.1.0/24" style="background:#000; border:1px solid #333; color:white; padding:0.5rem; width:100%; border-radius:8px;">
-    <div id="calc-result" style="margin-top:1rem; font-family:monospace; color:var(--text-muted); font-size:0.8rem;"></div>
-    <button onclick="document.getElementById('modal-calc').style.display='none'" class="btn" style="margin-top:1rem; width:100%">Cerrar</button>
-</div>
+        <div id="system-status">
+            <span>SYS_READY</span>
+            <span>TIEMPO_SESIÓN: <span id="uptime-clock">00:00:00</span></span>
+            <span>DB_VERSION: 5.0</span>
+        </div>
+        <div class="logo">S.I.L.V.A.<span style="color:var(--accent)">_ACADEMY</span></div>
+        <input type="text" id="buscador" placeholder="Escribe 'calc', 'logs' o busca materia...">
     </header>
+
     <main id="grid-apuntes"></main>
+
+    <div id="console-logs">
+        <div style="color:var(--accent); margin-bottom:5px;">-- SISTEMA DE LOGS DE ACTIVIDAD --</div>
+    </div>
+
+    <div id="modal-calc">
+        <h3 style="margin-top:0">Calculadora Subredes (PAR)</h3>
+        <p style="font-size:0.8rem; color:var(--text-muted)">Introduce IP/Máscara (ej: 192.168.1.0/24)</p>
+        <input type="text" id="ip-input" placeholder="192.168.1.0/24">
+        <button onclick="ejecutarCalculo()" class="btn" style="margin-top:10px; width:100%">Calcular</button>
+        <div id="calc-result" style="margin-top:1rem; font-family:monospace; font-size:0.75rem; border-top:1px solid #222; padding-top:10px;"></div>
+        <button onclick="document.getElementById('modal-calc').style.display='none'" class="btn" style="background:#333; margin-top:10px; width:100%">Cerrar</button>
+    </div>
+
     <script src="main.js"></script>
 </body>
 </html>
