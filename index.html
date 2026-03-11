@@ -2,20 +2,43 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Archivo Mecánico del Sr. Silva</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚙️ Archivo Mecánico - Sr. Silva</title>
     <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        /* Ajustes rápidos para el diseño dinámico */
+        #grid-apuntes {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 40px;
+            max-width: 1200px;
+            margin: auto;
+        }
+        .card {
+            border: 2px solid #e68a00; /* Cobre */
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            text-align: left;
+            transition: 0.3s;
+        }
+        .card:hover {
+            box-shadow: 0 0 20px #00ffff; /* Brillo Cian */
+            transform: translateY(-5px);
+        }
+        .card h3 { margin-top: 0; }
+        .badge { color: #00ffff; font-size: 0.8em; font-weight: bold; }
+    </style>
 </head>
 <body>
-    <header class="page-header">
-        <h1>⚙️ ARCHIVO MECÁNICO</h1>
-        <p>Terminal de Datos - Sr. Silva</p>
+    <header class="page-header" style="padding: 100px 20px; text-align: center;">
+        <h1 class="project-name">⚙️ ARCHIVO MECÁNICO</h1>
+        <p class="project-tagline">Terminal de Datos de 1º ASIR - Sr. Silva</p>
     </header>
 
-    <main>
-        <div id="contenedor-apuntes">
-            <p>Iniciando sistemas de lectura...</p>
-        </div>
-    </main>
+    <section id="grid-apuntes">
+        <p style="color: #00ffff;">Cargando núcleos de datos...</p>
+    </section>
 
     <script src="assets/js/main.js"></script>
 </body>
