@@ -4,42 +4,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>⚙️ Archivo Mecánico - Sr. Silva</title>
-    <link rel="stylesheet" href="assets/css/style.css">
     <style>
-        /* Ajustes rápidos para el diseño dinámico */
-        #grid-apuntes {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            padding: 40px;
-            max-width: 1200px;
-            margin: auto;
+        :root { --cian: #00ffff; --cobre: #e68a00; --fondo: #0a0a0a; --texto: #d1d1d1; }
+        body { background-color: var(--fondo); color: var(--texto); font-family: 'Courier New', monospace; margin: 0; }
+        .page-header { 
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('header-bg.jpg');
+            background-size: cover; background-position: center;
+            padding: 60px 20px; text-align: center; border-bottom: 3px solid var(--cobre);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
         }
-        .card {
-            border: 2px solid #e68a00; /* Cobre */
-            background: rgba(0, 0, 0, 0.7);
-            padding: 20px;
-            text-align: left;
-            transition: 0.3s;
+        h1 { color: var(--cobre); text-shadow: 0 0 10px var(--cobre); margin: 0; }
+        #grid-apuntes { 
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 25px; padding: 40px; max-width: 1200px; margin: auto; 
         }
-        .card:hover {
-            box-shadow: 0 0 20px #00ffff; /* Brillo Cian */
-            transform: translateY(-5px);
+        .card { 
+            border: 2px solid var(--cobre); background: rgba(20, 20, 20, 0.8); 
+            padding: 20px; transition: 0.3s; position: relative; overflow: hidden;
         }
-        .card h3 { margin-top: 0; }
-        .badge { color: #00ffff; font-size: 0.8em; font-weight: bold; }
+        .card:hover { border-color: var(--cian); box-shadow: 0 0 15px var(--cian); transform: translateY(-5px); }
+        .badge { color: var(--cian); font-size: 0.7em; letter-spacing: 2px; font-weight: bold; }
+        .btn { 
+            display: inline-block; margin-top: 15px; padding: 10px 20px;
+            border: 1px solid var(--cian); color: var(--cian); text-decoration: none;
+            transition: 0.3s; font-weight: bold;
+        }
+        .btn:hover { background: var(--cian); color: var(--fondo); }
     </style>
 </head>
 <body>
-    <header class="page-header" style="padding: 100px 20px; text-align: center;">
-        <h1 class="project-name">⚙️ ARCHIVO MECÁNICO</h1>
-        <p class="project-tagline">Terminal de Datos de 1º ASIR - Sr. Silva</p>
+    <header class="page-header">
+        <h1>⚙️ ARCHIVO MECÁNICO</h1>
+        <p>Consola de Datos ASIR - Sr. Silva</p>
     </header>
 
-    <section id="grid-apuntes">
-        <p style="color: #00ffff;">Cargando núcleos de datos...</p>
-    </section>
+    <main id="grid-apuntes">
+        </main>
 
-   <script src="main.js"></script>
+    <script src="main.js"></script>
 </body>
 </html>
