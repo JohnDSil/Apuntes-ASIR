@@ -1,26 +1,20 @@
 [
   {
-  "id": 1,
-  "siglas": "ISO",
-  "nombre": "Implantación de S.O.",
-  "descripcion": "Gestión de procesos, memoria y scripts en Bash/PowerShell.",
-  "estado": "🟢 Al día",
-  "enlace": "./ISO/README.md"
-},
- {
-  "id": 2,
-  "siglas": "PAR",
-  "nombre": "Redes",
-  "descripcion": "Unidades de la 1 a la 6: OSI, TCP/IP y Cisco.",
-  "estado": "🟢 Temario Completo",
-  "enlace": "./Redes/README.md"
-},
+    "siglas": "ISO",
+    "nombre": "Implantación de S.O.",
+    "estado": "ACTIVO",
+    "enlace": "./ISO/README.md"
+  },
   {
-    "id": 3,
+    "siglas": "PAR",
+    "nombre": "Redes",
+    "estado": "DATOS CARGADOS",
+    "enlace": "./Redes/README.md"
+  },
+  {
     "siglas": "LMSGI",
     "nombre": "Lenguajes de Marcas",
-    "descripcion": "HTML5, CSS3, XML y ahora... ¡JSON!",
-    "estado": "🔵 Prácticas",
-    "enlace": "./Lenguaje_Marcas/README.md"
+    "estado": "EN PROCESO",
+    "enlace": "./Lenguaje_de_Marcas/README.md"
   }
 ]
