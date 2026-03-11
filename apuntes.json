@@ -10,10 +10,10 @@
  {
   "id": 2,
   "siglas": "PAR",
-  "nombre": "Planificación de Redes",
+  "nombre": "Redes",
   "descripcion": "Unidades de la 1 a la 6: OSI, TCP/IP y Cisco.",
   "estado": "🟢 Temario Completo",
-  "enlace": "./Redes/ud1_caracterizacionRedes%20(1).pdf"
+  "enlace": "./Redes/README.md"
 },
   {
     "id": 3,
