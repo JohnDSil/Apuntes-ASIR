@@ -81,7 +81,8 @@ function navegarA(siglas) {
             { id: 3, t: "Direccionamiento IP", f: "ud3_direccionamientoIP%20(1).pdf" },
             { id: 4, t: "Tecnología Inalámbrica", f: "ud4_tecnologiaInalambrica.pdf" },
             { id: 5, t: "Switches Cisco", f: "ud5_switchesCisco.pdf" },
-            { id: 6, t: "Routers Cisco", f: "ud6_routerCisco.pdf" }
+            { id: 6, t: "Routers Cisco", f: "ud6_routerCisco.pdf" },
+            { id: 7, t: "Comandos Switch y Router Básicos", f: "comandos_nuevos.docx.pdf" }
         ];
     } else if (siglas === 'LMSGI') {
         carpeta = "Lenguaje de Marcas";
