@@ -1,67 +1,68 @@
+/**
+ * ARCHIVO MECÁNICO - MOTOR DE NAVEGACIÓN SPA
+ * Desarrollado para el Sr. Silva - 1º ASIR
+ */
+
 async function cargarSistema() {
     const contenedor = document.getElementById('grid-apuntes');
     try {
         const res = await fetch('./apuntes.json');
-        const datos = await res.json();
-
-        window.datosAsignaturas = datos; // Guardamos para uso posterior
+        if (!res.ok) throw new Error('Fallo en la matriz de datos');
+        window.datosAsignaturas = await res.json();
         renderizarPortada();
-
     } catch (error) {
-        contenedor.innerHTML = `<p style="color:red">⚠️ ERROR: ${error.message}</p>`;
+        contenedor.innerHTML = `<p style="color:red; text-align:center;">⚠️ ERROR DE SISTEMA: ${error.message}</p>`;
     }
 }
 
 function renderizarPortada() {
     const contenedor = document.getElementById('grid-apuntes');
+    contenedor.style.display = "grid"; // Aseguramos que sea grid
     contenedor.innerHTML = window.datosAsignaturas.map(asig => `
         <article class="card">
             <div class="badge">${asig.estado}</div>
             <h2>${asig.siglas}</h2>
             <p>${asig.nombre}</p>
-            <button onclick="verDetalle('${asig.siglas}')" class="btn">ACCEDER A DATOS</button>
+            <button onclick="navegarA('${asig.siglas}')" class="btn">ACCEDER A LA UNIDAD</button>
         </article>
     `).join('');
 }
 
-function verDetalle(siglas) {
+function navegarA(siglas) {
     const contenedor = document.getElementById('grid-apuntes');
+    contenedor.style.display = "block"; // Cambiamos a bloque para el dashboard
     
-    // Si es REDES (PAR), mostramos los PDFs de forma interactiva
+    let contenidoExtra = "";
+
+    // Lógica específica por asignatura
     if (siglas === 'PAR') {
         const unidades = [
-            { id: 1, titulo: "Caracterización de Redes", file: "ud1_caracterizacionRedes%20(1).pdf" },
-            { id: 2, titulo: "Modelo OSI y TCP/IP", file: "ud2_modelosOSI-TCPIP%20(1).pdf" },
-            { id: 3, titulo: "Direccionamiento IP", file: "ud3_direccionamientoIP%20(1).pdf" },
-            { id: 4, titulo: "Tecnologías Inalámbricas", file: "ud4_tecnologialnalambrica.pdf" },
-            { id: 5, titulo: "Switches Cisco", file: "ud5_switchesCisco.pdf" },
-            { id: 6, titulo: "Routers Cisco", file: "ud6_routerCisco.pdf" }
+            { id: 1, t: "Caracterización de Redes", f: "ud1_caracterizacionRedes%20(1).pdf" },
+            { id: 2, t: "Modelo OSI y TCP/IP", f: "ud2_modelosOSI-TCPIP%20(1).pdf" },
+            { id: 3, t: "Direccionamiento IP", f: "ud3_direccionamientoIP%20(1).pdf" },
+            { id: 4, t: "Tecnologías Inalámbricas", f: "ud4_tecnologialnalambrica.pdf" },
+            { id: 5, t: "Switches Cisco", f: "ud5_switchesCisco.pdf" },
+            { id: 6, t: "Routers Cisco", f: "ud6_routerCisco.pdf" }
         ];
 
-        contenedor.innerHTML = `
-            <div style="grid-column: 1 / -1; text-align: left;">
-                <button onclick="renderizarPortada()" class="btn" style="margin-bottom:20px;">⬅ VOLVER</button>
-                <h2 style="color:var(--cian)">🌐 ARCHIVO DE REDES (PAR)</h2>
-                <div id="subgrid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap:15px;">
+        contenidoExtra = `
+            <div style="display:grid; grid-template-columns: 1fr 2fr; gap:20px; margin-top:20px;">
+                <div id="lista-unidades">
                     ${unidades.map(u => `
-                        <div class="card" style="border-color:var(--cian)">
-                            <small class="badge">UNIDAD 0${u.id}</small>
-                            <h4 style="margin:10px 0">${u.titulo}</h4>
-                            <a href="./Redes/${u.file}" target="_blank" class="btn" style="font-size:0.8em">ABRIR PDF</a>
+                        <div class="card" style="margin-bottom:10px; cursor:pointer; border-color:var(--cian);" 
+                             onclick="cargarVisor('./Redes/${u.f}')">
+                            <small class="badge">UD ${u.id}</small>
+                            <h4 style="margin:5px 0; font-size:0.9em;">${u.t}</h4>
                         </div>
                     `).join('')}
+                </div>
+                <div id="visor-pdf" style="border:2px solid var(--cobre); height:600px; background:#333; display:flex; align-items:center; justify-content:center;">
+                    <p style="color:var(--cobre)">⬅ Seleccione una unidad para iniciar la lectura</p>
                 </div>
             </div>
         `;
     } else {
-        contenedor.innerHTML = `
-            <div style="grid-column: 1 / -1;">
-                <button onclick="renderizarPortada()" class="btn">⬅ VOLVER</button>
-                <p>Accediendo al README de ${siglas}...</p>
-                <iframe src="./${siglas}/README.md" style="width:100%; height:600px; border:1px solid var(--cobre); background: white;"></iframe>
-            </div>
-        `;
-    }
-}
-
-window.onload = cargarSistema;
+        // Para ISO y otras, cargamos el README en un panel
+        contenidoExtra = `
+            <div style="margin-top:20px;">
+                <iframe src="./${siglas}/README.md" style="width:100%; height:600px; border:2px solid
