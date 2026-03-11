@@ -110,12 +110,42 @@ function cargarVisor(ruta) {
     document.getElementById('visor-pdf').innerHTML = `<embed src="${ruta}" type="application/pdf" width="100%" height="100%" />`;
 }
 
-function mostrarNotificacion(msj) {
+function mostrarNotificacion(msj, asignatura = 'GENERIC') {
+    // Definimos la paleta de colores según la asignatura
+    const paleta = {
+        'PAR': { principal: '#00ffff', sombra: 'rgba(0, 255, 255, 0.5)' }, // Cian Eléctrico
+        'GBD': { principal: '#e68a00', sombra: 'rgba(230, 138, 0, 0.5)' }, // Cobre/Naranja
+        'ISO': { principal: '#00ff00', sombra: 'rgba(0, 255, 0, 0.5)' },   // Verde Terminal
+        'GENERIC': { principal: '#ffffff', sombra: 'rgba(255, 255, 255, 0.3)' }
+    };
+
+    // Seleccionamos el color (si no existe la sigla, usamos el genérico)
+    const estilo = paleta[asignatura] || paleta['GENERIC'];
+
     let aviso = document.createElement('div');
-    aviso.style = "position:fixed; bottom:20px; right:20px; background:var(--cian); color:#000; padding:15px; border: 2px solid #000; font-weight:bold; z-index:1000; font-family:monospace; box-shadow: 5px 5px 0px #000;";
-    aviso.innerHTML = `> INFO: ${msj}`;
+    aviso.style = `
+        position: fixed; 
+        bottom: 20px; 
+        right: 20px; 
+        background: #000; 
+        color: ${estilo.principal}; 
+        padding: 15px; 
+        border: 2px solid ${estilo.principal}; 
+        font-weight: bold; 
+        z-index: 1000; 
+        font-family: monospace; 
+        box-shadow: 0 0 15px ${estilo.sombra};
+        transition: all 0.5s ease;
+    `;
+    
+    aviso.innerHTML = `> INFO_SYSTEM [${asignatura}]: ${msj}`;
     document.body.appendChild(aviso);
-    setTimeout(() => aviso.remove(), 5000);
+
+    // Animación de salida: se desvanece antes de borrarse
+    setTimeout(() => {
+        aviso.style.opacity = "0";
+        setTimeout(() => aviso.remove(), 500);
+    }, 4500);
 }
 
 window.onload = cargarSistema;
