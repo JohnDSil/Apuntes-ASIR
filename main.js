@@ -1,35 +1,15 @@
 /**
- * ARCHIVO MECÁNICO - MOTOR VERSIÓN ALPHA-TEST
- * Buscador + Colores Dinámicos + Generador de Examen
+ * SISTEMA OPERATIVO DE APUNTES - SR. SILVA
  */
-
 const comandoDiccionario = {
-    "ping": { desc: "ICMP: Comprueba conectividad.", cat: "PAR" },
-    "ls": { desc: "Linux: Lista directorios.", cat: "ISO" },
-    "chmod": { desc: "Linux: Cambia permisos.", cat: "ISO" },
-    "sql": { desc: "Lenguaje de consulta de BBDD.", cat: "GBD" },
-    "osi": { desc: "Modelo de 7 capas de red.", cat: "PAR" }
+    "ping": { desc: "ICMP: Test de conectividad.", cat: "PAR" },
+    "osi": { desc: "Modelo de 7 capas de red.", cat: "PAR" },
+    "ls": { desc: "Listado de directorios Linux.", cat: "ISO" }
 };
 
 const preguntasTest = [
-    // --- REDES (PAR) ---
-    { q: "¿En qué capa del modelo OSI trabaja un Router?", a: "3", cat: "PAR" },
-    { q: "¿Qué protocolo se usa para asignar IPs de forma automática?", a: "dhcp", cat: "PAR" },
-    { q: "¿Cuál es la máscara por defecto de una red Clase C (ej: 192.168.1.0)?", a: "255.255.255.0", cat: "PAR" },
-    
-    // --- SISTEMAS (ISO) ---
-    { q: "Comando Linux para ver el manual de una instrucción:", a: "man", cat: "ISO" },
-    { q: "Símbolo que representa el directorio raíz en Linux:", a: "/", cat: "ISO" },
-    { q: "Comando para cambiar el propietario de un archivo:", a: "chown", cat: "ISO" },
-    
-    // --- BASES DE DATOS (GBD) ---
-    { q: "Sentencia SQL para borrar todos los datos de una tabla sin borrar la tabla:", a: "truncate", cat: "GBD" },
-    { q: "¿Qué cláusula SQL se usa para filtrar resultados?", a: "where", cat: "GBD" },
-    { q: "¿Cómo se llama la clave que identifica de forma única una fila?", a: "primary key", cat: "GBD" },
-    
-    // --- HARDWARE (FH) ---
-    { q: "¿Qué componente realiza las operaciones aritméticas y lógicas?", a: "cpu", cat: "GENERIC" },
-    { q: "¿Qué memoria es volátil y pierde los datos al apagar el equipo?", a: "ram", cat: "GENERIC" }
+    { q: "¿Capa OSI donde operan los Routers?", a: "3", cat: "PAR" },
+    { q: "¿Comando para ver manuales en Linux?", a: "man", cat: "ISO" }
 ];
 
 async function cargarSistema() {
@@ -43,39 +23,18 @@ async function cargarSistema() {
 
         inputBuscador.addEventListener('input', (e) => {
             const val = e.target.value.toLowerCase();
-            
-            // Lógica de colores y notificaciones
             if (comandoDiccionario[val]) {
                 const cmd = comandoDiccionario[val];
                 mostrarNotificacion(cmd.desc, cmd.cat);
             }
-
             const filtrados = window.datosAsignaturas.filter(a => 
                 a.nombre.toLowerCase().includes(val) || a.siglas.toLowerCase().includes(val)
             );
             renderizarPortada(filtrados);
         });
     } catch (error) {
-        contenedor.innerHTML = `<p style="color:red">⚠️ ERROR DE NÚCLEO</p>`;
+        contenedor.innerHTML = `<p style="color:red">ERROR DE ENLACE AL NÚCLEO</p>`;
     }
-}
-
-function mostrarNotificacion(msj, cat) {
-    const paleta = {
-        'PAR': '#00ffff', // Cian
-        'GBD': '#e68a00', // Cobre
-        'ISO': '#00ff00', // Verde
-        'GENERIC': '#ffffff'
-    };
-    const color = paleta[cat] || paleta['GENERIC'];
-
-    let aviso = document.createElement('div');
-    aviso.style = `position:fixed; bottom:20px; right:20px; background:#000; color:${color}; 
-                   padding:15px; border:2px solid ${color}; font-family:monospace; 
-                   box-shadow: 0 0 15px ${color}; z-index:1000;`;
-    aviso.innerHTML = `> [${cat}]: ${msj}`;
-    document.body.appendChild(aviso);
-    setTimeout(() => { aviso.style.opacity="0"; setTimeout(()=>aviso.remove(), 500); }, 4000);
 }
 
 function renderizarPortada(datos) {
@@ -86,34 +45,67 @@ function renderizarPortada(datos) {
             <div class="badge">${asig.estado}</div>
             <h2>${asig.siglas}</h2>
             <p>${asig.nombre}</p>
-            <button onclick="navegarA('${asig.siglas}')" class="btn">ACCEDER</button>
+            <button onclick="navegarA('${asig.siglas}')" class="btn">INICIAR SESIÓN</button>
         </article>
     `).join('');
     
-    // Añadimos la tarjeta especial de Test
     html += `
-        <article class="card" style="border-style: dashed; opacity: 0.8;">
-            <div class="badge" style="color:#ff00ff">MODO ENTRENAMIENTO</div>
-            <h2>TEST</h2>
-            <p>Ponte a prueba para los finales.</p>
-            <button onclick="iniciarTest()" class="btn" style="border-color:#ff00ff; color:#ff00ff">INICIAR SIMULACIÓN</button>
-        </article>
-    `;
+        <article class="card" style="border: 1px dashed var(--cobre);">
+            <div class="badge" style="color:var(--cobre)">SIMULACIÓN</div>
+            <h2>ENTRENAMIENTO</h2>
+            <button onclick="iniciarTest()" class="btn">INICIAR TEST</button>
+        </article>`;
     contenedor.innerHTML = html;
 }
 
-function iniciarTest() {
-    const index = Math.floor(Math.random() * preguntasTest.length);
-    const p = preguntasTest[index];
-    const respuesta = prompt(`[SISTEMA DE TEST - ${p.cat}]\n\n${p.q}`);
+function navegarA(siglas) {
+    const contenedor = document.getElementById('grid-apuntes');
+    contenedor.style.display = "block";
     
-    if (respuesta && respuesta.toLowerCase() === p.a.toLowerCase()) {
-        mostrarNotificacion("¡ACCESO CONCEDIDO! Respuesta correcta.", p.cat);
+    if (siglas === 'PAR') {
+        const unidades = [
+            { id: 1, t: "Redes: Caracterización", f: "ud1_caracterizacionRedes%20(1).pdf" },
+            { id: 3, t: "Direccionamiento IP", f: "ud3_direccionamientoIP%20(1).pdf" },
+            { id: 4, t: "Tecnología Inalámbrica", f: "ud4_tecnologiaInalambrica.pdf" }
+        ];
+        contenedor.innerHTML = `
+            <button onclick="renderizarPortada(window.datosAsignaturas)" class="btn">< VOLVER</button>
+            <h2 style="color:var(--cian); margin: 20px 0;">SISTEMA DE REDES > ACCESO</h2>
+            <div style="display:grid; grid-template-columns: 1fr 2fr; gap:20px;">
+                <div>${unidades.map(u => `
+                    <div class="card" style="margin-bottom:10px; cursor:pointer;" onclick="cargarVisor('./Redes/${u.f}')">
+                        <small class="badge">UD ${u.id}</small>
+                        <h4>${u.t}</h4>
+                    </div>`).join('')}
+                </div>
+                <div id="visor-pdf"><p style="text-align:center; padding-top:200px;">ESPERANDO SELECCIÓN...</p></div>
+            </div>`;
     } else {
-        mostrarNotificacion("ACCESO DENEGADO. Inténtelo de nuevo.", "GENERIC");
+        contenedor.innerHTML = `
+            <button onclick="renderizarPortada(window.datosAsignaturas)" class="btn">< VOLVER</button>
+            <iframe src="./${siglas}/README.md" style="width:100%; height:600px; border:1px solid var(--cian); background:#fff; margin-top:20px;"></iframe>`;
     }
 }
 
-// ... Mantener funciones navegarA, crearDashboardHTML y cargarVisor de las versiones anteriores ...
+function cargarVisor(ruta) {
+    document.getElementById('visor-pdf').innerHTML = `<embed src="${ruta}" type="application/pdf" width="100%" height="100%" />`;
+}
+
+function mostrarNotificacion(msj, cat) {
+    let aviso = document.createElement('div');
+    const color = cat === 'PAR' ? 'var(--cian)' : 'var(--cobre)';
+    aviso.style = `position:fixed; bottom:20px; right:20px; background:#000; color:${color}; 
+                   padding:15px; border:2px solid ${color}; font-family:monospace; box-shadow: 0 0 15px ${color}; z-index:1000;`;
+    aviso.innerHTML = `> [${cat}]: ${msj}`;
+    document.body.appendChild(aviso);
+    setTimeout(() => aviso.remove(), 4000);
+}
+
+function iniciarTest() {
+    const p = preguntasTest[Math.floor(Math.random() * preguntasTest.length)];
+    const r = prompt(`[SISTEMA DE TEST]\n\n${p.q}`);
+    if (r && r.toLowerCase() === p.a.toLowerCase()) mostrarNotificacion("CONCEDIDO.", p.cat);
+    else mostrarNotificacion("DENEGADO.", "ERR");
+}
 
 window.onload = cargarSistema;
