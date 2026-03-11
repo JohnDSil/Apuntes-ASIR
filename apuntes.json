@@ -1,12 +1,12 @@
 [
   {
-    "id": 1,
-    "siglas": "ISO",
-    "nombre": "Implantación de S.O.",
-    "descripcion": "Gestión de procesos, memoria y scripts en Bash/PowerShell.",
-    "estado": "🟢 Al día",
-    "enlace": "./ISO/README.md"
-  },
+  "id": 1,
+  "siglas": "ISO",
+  "nombre": "Implantación de S.O.",
+  "descripcion": "Gestión de procesos, memoria y scripts en Bash/PowerShell.",
+  "estado": "🟢 Al día",
+  "enlace": "./ISO/README.md"
+},
   {
     "id": 2,
     "siglas": "PAR",
