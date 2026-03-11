@@ -2,19 +2,13 @@
   {
     "siglas": "ISO",
     "nombre": "Implantación de S.O.",
-    "estado": "ACTIVO",
+    "estado": "SYSTEM_OK",
     "enlace": "./ISO/README.md"
   },
   {
     "siglas": "PAR",
     "nombre": "Redes",
-    "estado": "DATOS CARGADOS",
+    "estado": "DATA_LOADED",
     "enlace": "./Redes/README.md"
-  },
-  {
-    "siglas": "LMSGI",
-    "nombre": "Lenguajes de Marcas",
-    "estado": "EN PROCESO",
-    "enlace": "./Lenguaje_de_Marcas/README.md"
   }
 ]
