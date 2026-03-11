@@ -18,7 +18,7 @@ Selecciona una asignatura para ver los apuntes detallados:
 
 ---
 
-## 🛠️ Stack Tecnológico de 1º
+## 🛠️ Stack Tecnológico
 En este curso estamos trabajando con:
 * **Sistemas:** `Linux (Debian/Ubuntu)` & `Windows Server 2022`
 * **Redes:** `Cisco Packet Tracer` & `Wireshark`
