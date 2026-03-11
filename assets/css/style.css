@@ -1,0 +1,34 @@
+:root {
+    --cian: #00ffff;
+    --cobre: #e68a00;
+    --fondo: #1a1a1a;
+}
+
+body {
+    background-color: var(--fondo);
+    color: white;
+    font-family: 'Courier New', monospace;
+    text-align: center;
+}
+
+.tarjeta-asignatura {
+    border: 2px solid var(--cobre);
+    margin: 20px;
+    padding: 15px;
+    display: inline-block;
+    width: 250px;
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
+}
+
+.badge {
+    display: block;
+    color: var(--cian);
+    margin-bottom: 10px;
+}
+
+.btn {
+    border: 1px solid var(--cian);
+    color: var(--cian);
+    text-decoration: none;
+    padding: 5px 10px;
+}
