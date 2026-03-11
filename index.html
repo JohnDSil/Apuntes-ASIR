@@ -3,79 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Académico - Sr. Silva</title>
+    <title>S.I.L.V.A. Enterprise - Management Console</title>
     <link rel="icon" href="data:,">
     <style>
         :root {
-            --primary: #3b82f6;    /* Azul profesional */
-            --bg: #f8fafc;         /* Fondo muy claro */
-            --card-bg: #ffffff;
-            --text-dark: #1e293b;
-            --text-light: #64748b;
-            --accent: #10b981;     /* Verde éxito */
-            --danger: #ef4444;
+            --brand-primary: #0ea5e9;
+            --brand-dark: #0f172a;
+            --surface: #1e293b;
+            --border: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
         }
 
         body { 
-            background-color: var(--bg); color: var(--text-dark); 
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
-            margin: 0; line-height: 1.6;
+            background-color: var(--brand-dark); 
+            color: var(--text-main); 
+            font-family: 'Segoe UI', system-ui, sans-serif; 
+            margin: 0; 
         }
 
+        /* Top Navigation Bar */
         header { 
-            background: white; border-bottom: 1px solid #e2e8f0;
-            padding: 2rem; text-align: center; position: sticky; top: 0; z-index: 100;
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 2rem;
+            display: flex; justify-content: space-between; align-items: center;
+            position: sticky; top: 0; z-index: 1000;
         }
 
-        h1 { margin: 0; font-weight: 800; color: var(--text-dark); font-size: 1.8rem; }
-        
-        .search-container { margin-top: 1.5rem; }
+        .brand-logo { font-weight: 800; font-size: 1.2rem; letter-spacing: -1px; color: var(--brand-primary); }
+
         #buscador {
-            padding: 0.8rem 1.5rem; width: 80%; max-width: 500px;
-            border: 2px solid #e2e8f0; border-radius: 50px; font-size: 1rem;
-            transition: all 0.3s ease; outline: none;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: white;
+            padding: 0.6rem 1rem;
+            width: 300px;
+            transition: 0.3s;
         }
-        #buscador:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1); }
 
+        #buscador:focus { border-color: var(--brand-primary); outline: none; background: rgba(255, 255, 255, 0.1); }
+
+        /* Main Grid */
         #grid-apuntes { 
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
-            gap: 2rem; padding: 3rem; max-width: 1200px; margin: auto;
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
+            gap: 1.5rem; padding: 3rem; max-width: 1400px; margin: auto;
         }
 
         .card { 
-            background: var(--card-bg); border-radius: 12px; padding: 1.5rem;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); transition: transform 0.2s;
-            border: 1px solid #f1f5f9; display: flex; flex-direction: column;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 2rem;
+            transition: all 0.2s ease;
         }
-        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
-        .card h2 { margin-top: 0; color: var(--primary); font-size: 1.3rem; }
-        .card p { color: var(--text-light); font-size: 0.95rem; flex-grow: 1; }
+
+        .card:hover { 
+            border-color: var(--brand-primary);
+            box-shadow: 0 0 20px rgba(14, 165, 233, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .card h2 { margin: 0 0 0.5rem 0; font-size: 1.25rem; font-weight: 600; }
+        .card p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem; }
 
         .btn { 
-            background: var(--primary); color: white; border: none; 
-            padding: 0.7rem; border-radius: 8px; cursor: pointer;
-            font-weight: 600; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.5px;
-            margin-top: 1rem; transition: background 0.2s;
+            background: var(--brand-primary); 
+            color: #fff; border: none; 
+            padding: 0.7rem 1.2rem; border-radius: 4px; 
+            cursor: pointer; font-weight: 600; font-size: 0.85rem;
+            transition: opacity 0.2s;
         }
-        .btn:hover { background: #2563eb; }
 
-        /* Visor de PDF Profesional */
-        .dashboard-container { display: grid; grid-template-columns: 300px 1fr; gap: 2rem; padding: 2rem; }
-        .sidebar { background: white; padding: 1rem; border-radius: 12px; border: 1px solid #e2e8f0; height: fit-content; }
+        .btn:hover { opacity: 0.9; }
+
+        /* Dashboard View */
+        .dashboard-container { display: grid; grid-template-columns: 280px 1fr; gap: 1px; background: var(--border); height: calc(100vh - 70px); }
+        .sidebar { background: var(--brand-dark); padding: 1.5rem; overflow-y: auto; }
         .unit-item { 
-            padding: 1rem; border-bottom: 1px solid #f1f5f9; cursor: pointer; 
-            border-radius: 6px; transition: 0.2s;
+            padding: 0.8rem 1rem; margin-bottom: 0.5rem; 
+            border-radius: 6px; cursor: pointer; color: var(--text-muted);
+            font-size: 0.9rem; transition: 0.2s;
         }
-        .unit-item:hover { background: #eff6ff; color: var(--primary); }
-        #visor-pdf { background: #334155; border-radius: 12px; height: 800px; overflow: hidden; }
+        .unit-item:hover { background: rgba(255, 255, 255, 0.05); color: var(--brand-primary); }
+        #visor-pdf { background: #000; display: flex; align-items: center; justify-content: center; }
     </style>
 </head>
 <body>
     <header>
-        <h1>Centro de Estudios ASIR</h1>
-        <div class="search-container">
-            <input type="text" id="buscador" placeholder="Buscar unidades o comandos...">
-        </div>
+        <div class="brand-logo">S.I.L.V.A. // ENTERPRISE</div>
+        <input type="text" id="buscador" placeholder="Search resources...">
     </header>
     <main id="grid-apuntes"></main>
     <script src="main.js"></script>
