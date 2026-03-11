@@ -1,3 +1,8 @@
+# ⚙️ El Archivo Mecánico del Sr. Silva
+> Bienvenue, viajero de la red. Aquí yace el compendio de conocimientos del primer curso del ciclo ASIR, recopilado y organizado con la precisión de un relojero.
+
+---
+
 # 🖥️ Portal de Apuntes - 1º ASIR
 > **Estudiante:** Sr. Silva  
 > **Curso:** 2025/2026  
