@@ -3,91 +3,98 @@
 @import "{{ site.theme }}";
 
 // --- Paleta de Colores Tesla-Steampunk (Futurista) ---
-$color-fondo: #1a1a1a;       // Negro casi puro, para máximo contraste
-$color-texto-base: #d1d1d1;  // Gris muy claro, para lectura cómoda
-$color-tesla-cyan: #00ffff;  // Cian eléctrico (brillo de neón/válvula)
-$color-tesla-blue: #0080ff;  // Azul Tesla, para sutiles acentos
+$color-fondo: #1a1a1a;       // Negro casi puro, para máximo contraste
+$color-texto-base: #d1d1d1;  // Gris muy claro, para lectura cómoda
+$color-tesla-cyan: #00ffff;  // Cian eléctrico (brillo de neón/válvula)
+$color-tesla-blue: #0080ff;  // Azul Tesla, para sutiles acentos
 $color-cobre-brillante: #e68a00; // Cobre anaranjado metálico
-$color-enlaces: #00cccc;     // Cian más suave para enlaces
+$color-enlaces: #00cccc;     // Cian más suave para enlaces
 
 // --- Estilos Globales ---
 body {
-  background-color: $color-fondo;
-  color: $color-texto-base;
-  font-family: 'Special Elite', 'Courier New', Courier, monospace; // Mantenemos la máquina de escribir
+  background-color: $color-fondo;
+  color: $color-texto-base;
+  font-family: 'Special Elite', 'Courier New', Courier, monospace; // Mantenemos la máquina de escribir
 }
 
 // --- Cabecera (El Banner Superior) ---
-// Mantenemos la cabecera actual que ya es perfecta.
+// Recuperamos la cabecera original e integramos los nuevos colores.
 .page-header {
   background-color: transparent; // Deja ver la imagen de fondo
-  border-bottom: 3px solid $color-cobre-brillante;
-  // Añadimos un sutil resplandor cian a la cabecera
-  box-shadow: 0 0 15px rgba($color-tesla-cyan, 0.3);
+  // --- ESTA LÍNEA ES LA CLAVE ---
+  // Ajuste la ruta aquí si la imagen no está en la raíz de su repositorio.
+  background-image: url('../../header-bg.jpg'); 
+  // -----------------------------
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  border-bottom: 3px solid $color-cobre-brillante;
+  // Añadimos un sutil resplandor cian a la cabecera que combina con los neones.
+  box-shadow: 0 0 15px rgba($color-tesla-cyan, 0.3);
 }
 
 // --- Texto Principal (Título y Tagline en la cabecera) ---
 .project-name, .project-tagline {
-  color: $color-cobre-brillante !important;
-  text-shadow: 0 0 10px rgba($color-cobre-brillante, 0.7); // Efecto brillo
+  color: $color-cobre-brillante !important;
+  text-shadow: 0 0 10px rgba($color-cobre-brillante, 0.7); // Efecto brillo
 }
 
 // --- Títulos dentro de la página (El cambio principal) ---
 h1, h2, h3, h4, h5, h6 {
-  color: $color-tesla-cyan; // ¡Aquí está el neón futurista!
-  border-bottom-color: $color-cobre-brillante;
-  text-shadow: 0 0 8px rgba($color-tesla-cyan, 0.6); // Resplandor cian
+  color: $color-tesla-cyan; // ¡Aquí está el neón futurista!
+  border-bottom-color: $color-cobre-brillante;
+  text-shadow: 0 0 8px rgba($color-tesla-cyan, 0.6); // Resplandor cian
 }
 
 // --- Enlaces ---
 a {
-  color: $color-enlaces;
-  text-shadow: 0 0 5px rgba($color-enlaces, 0.5);
-  &:hover {
-    color: lighten($color-tesla-cyan, 15%);
-    text-shadow: 0 0 10px $color-tesla-cyan; // Brillo intenso al pasar el ratón
-    text-decoration: none;
-  }
+  color: $color-enlaces;
+  text-shadow: 0 0 5px rgba($color-enlaces, 0.5);
+  &:hover {
+    color: lighten($color-tesla-cyan, 15%);
+    text-shadow: 0 0 10px $color-tesla-cyan; // Brillo intenso al pasar el ratón
+    text-decoration: none;
+  }
 }
 
 // --- Botones (Enlaces de acceso en la tabla) ---
 .btn {
-  background-color: transparent;
-  border: 2px solid $color-tesla-cyan;
-  color: $color-tesla-cyan;
-  border-radius: 0; // Estilo mecánico cuadrado
-  text-transform: uppercase;
-  font-weight: bold;
-  box-shadow: 0 0 5px rgba($color-tesla-cyan, 0.5);
-  
-  &:hover {
-    background-color: $color-tesla-cyan;
-    color: $color-fondo; // Texto oscuro sobre fondo cian brillante
-    box-shadow: 0 0 15px $color-tesla-cyan;
-  }
+  background-color: transparent;
+  border: 2px solid $color-tesla-cyan;
+  color: $color-tesla-cyan;
+  border-radius: 0; // Estilo mecánico cuadrado
+  text-transform: uppercase;
+  font-weight: bold;
+  box-shadow: 0 0 5px rgba($color-tesla-cyan, 0.5);
+  
+  &:hover {
+    background-color: $color-tesla-cyan;
+    color: $color-fondo; // Texto oscuro sobre fondo cian brillante
+    box-shadow: 0 0 15px $color-tesla-cyan;
+  }
 }
 
 // --- Tablas de Apuntes ---
 table {
-  border: 2px solid $color-cobre-brillante;
-  color: $color-texto-base;
-  background-color: rgba(0,0,0,0.3); // Fondo ligeramente oscuro para la tabla
-  
-  thead {
-    background-color: transparent;
-    border-bottom: 2px solid $color-cobre-brillante;
-    color: $color-cobre-brillante; // Títulos de tabla en cobre
-  }
-  
-  th, td {
-    border: 1px solid rgba($color-cobre-brillante, 0.5);
-  }
+  border: 2px solid $color-cobre-brillante;
+  color: $color-texto-base;
+  background-color: rgba(0,0,0,0.3); // Fondo ligeramente oscuro para la tabla
+  
+  thead {
+    background-color: transparent;
+    border-bottom: 2px solid $color-cobre-brillante;
+    color: $color-cobre-brillante; // Títulos de tabla en cobre
+  }
+  
+  th, td {
+    border: 1px solid rgba($color-cobre-brillante, 0.5);
+  }
 }
 
 // --- Bloques de código y blockquotes (La terminal futurista) ---
 pre, blockquote {
-  background-color: rgba(0, 0, 0, 0.6); // Fondo muy oscuro
-  border-left: 5px solid $color-tesla-blue; // Acento azul Tesla
-  color: lighten($color-tesla-blue, 30%); // Texto azul claro terminal
-  box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+  background-color: rgba(0, 0, 0, 0.6); // Fondo muy oscuro
+  border-left: 5px solid $color-tesla-blue; // Acento azul Tesla
+  color: lighten($color-tesla-blue, 30%); // Texto azul claro terminal
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
 }
