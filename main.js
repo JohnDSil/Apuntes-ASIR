@@ -33,13 +33,14 @@ function navegarA(siglas) {
     contenedor.style.display = "block";
     
     if (siglas === 'PAR') {
-        const unidades = [
+      const unidades = [
             { id: 1, t: "Caracterización de Redes", f: "ud1_caracterizacionRedes%20(1).pdf" },
             { id: 2, t: "Modelo OSI y TCP/IP", f: "ud2_modelosOSI-TCPIP%20(1).pdf" },
             { id: 3, t: "Direccionamiento IP", f: "ud3_direccionamientoIP%20(1).pdf" },
-            { id: 4, t: "Tecnologías Inalámbricas", f: "ud4_tecnologialnalambrica.pdf" },
+            { id: 4, t: "Tecnologías Inalámbricas", f: "ud4_tecnologiaInalambrica.pdf" },
             { id: 5, t: "Switches Cisco", f: "ud5_switchesCisco.pdf" },
             { id: 6, t: "Routers Cisco", f: "ud6_routerCisco.pdf" }
+        
         ];
 
         contenedor.innerHTML = `
