@@ -114,6 +114,18 @@
         <div class="logo">S.I.L.V.A.<span style="color:var(--accent)">.</span></div>
         <p style="color:var(--text-muted)">Apuntes de ASIR</p>
         <input type="text" id="buscador" placeholder="Buscar asignatura o comando...">
+        <div id="system-status" style="font-family: monospace; font-size: 0.75rem; color: var(--accent); margin-bottom: 1rem; display: flex; justify-content: center; gap: 20px;">
+    <span>STATUS: ONLINE</span>
+    <span>UPTIME: <span id="uptime-clock">00:00:00</span></span>
+    <span>DATABASE: 30Q LOADED</span>
+</div>
+
+<div id="modal-calc" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background:var(--card-bg); border:2px solid var(--accent); padding:2rem; border-radius:16px; z-index:3000; box-shadow:0 0 50px rgba(0,0,0,0.8);">
+    <h3 style="margin-top:0">Calculadora de Subredes ASIR</h3>
+    <input type="text" id="ip-input" placeholder="Ej: 192.168.1.0/24" style="background:#000; border:1px solid #333; color:white; padding:0.5rem; width:100%; border-radius:8px;">
+    <div id="calc-result" style="margin-top:1rem; font-family:monospace; color:var(--text-muted); font-size:0.8rem;"></div>
+    <button onclick="document.getElementById('modal-calc').style.display='none'" class="btn" style="margin-top:1rem; width:100%">Cerrar</button>
+</div>
     </header>
     <main id="grid-apuntes"></main>
     <script src="main.js"></script>
