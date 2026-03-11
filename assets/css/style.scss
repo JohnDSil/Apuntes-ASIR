@@ -20,7 +20,7 @@ body {
 // --- Cabecera (El Banner Superior) ---
 .page-header {
   background-color: $color-fondo;
-  background-image: url('https://johndsil.github.io/Apuntes-ASIR/assets/img/header-bg.jpg'); // Fondo metálico
+  background-image: url('/Apuntes-ASIR/header-bg.jpg'); // Fondo metálico
   border-bottom: 5px solid $color-cobre;
   color: $color-cobre;
 }
