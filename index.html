@@ -1,123 +1,83 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <link rel="icon" href="data:,">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S.I.L.V.A. QUANTUM TERMINAL</title>
+    <title>Dashboard Académico - Sr. Silva</title>
+    <link rel="icon" href="data:,">
     <style>
-    :root {
-        --bg-main: #0f172a;      /* Azul pizarra muy oscuro */
-        --bg-card: #1e293b;      /* Azul pizarra grisáceo */
-        --accent: #38bdf8;       /* Cian suave profesional */
-        --accent-alt: #818cf8;   /* Violeta suave para GBD/ISO */
-        --text-main: #f1f5f9;    /* Blanco roto */
-        --text-muted: #94a3b8;   /* Gris para detalles */
-        --success: #22c55e;
-    }
+        :root {
+            --primary: #3b82f6;    /* Azul profesional */
+            --bg: #f8fafc;         /* Fondo muy claro */
+            --card-bg: #ffffff;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --accent: #10b981;     /* Verde éxito */
+            --danger: #ef4444;
+        }
 
-    body {
-        background-color: var(--bg-main);
-        color: var(--text-main);
-        font-family: 'Inter', -apple-system, sans-serif; /* Más moderno que Courier */
-        margin: 0;
-        line-height: 1.6;
-    }
+        body { 
+            background-color: var(--bg); color: var(--text-dark); 
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
+            margin: 0; line-height: 1.6;
+        }
 
-    /* Cabecera Limpia */
-    .page-header {
-        background: rgba(15, 23, 42, 0.8);
-        backdrop-filter: blur(10px); /* Efecto cristalino */
-        border-bottom: 1px solid rgba(255,255,255,0.1);
-        padding: 30px 20px;
-        position: sticky; top: 0; z-index: 1000;
-        text-align: center;
-    }
+        header { 
+            background: white; border-bottom: 1px solid #e2e8f0;
+            padding: 2rem; text-align: center; position: sticky; top: 0; z-index: 100;
+        }
 
-    h1 { 
-        margin: 0; font-size: 1.8rem; letter-spacing: -0.5px; 
-        background: linear-gradient(90deg, var(--accent), var(--accent-alt));
-        -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    }
+        h1 { margin: 0; font-weight: 800; color: var(--text-dark); font-size: 1.8rem; }
+        
+        .search-container { margin-top: 1.5rem; }
+        #buscador {
+            padding: 0.8rem 1.5rem; width: 80%; max-width: 500px;
+            border: 2px solid #e2e8f0; border-radius: 50px; font-size: 1rem;
+            transition: all 0.3s ease; outline: none;
+        }
+        #buscador:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1); }
 
-    /* Buscador Moderno */
-    #buscador {
-        background: var(--bg-card);
-        border: 1px solid rgba(255,255,255,0.1);
-        color: white;
-        padding: 12px 20px;
-        width: 100%; max-width: 600px;
-        border-radius: 8px;
-        margin-top: 20px;
-        font-size: 1rem;
-        transition: 0.3s;
-    }
+        #grid-apuntes { 
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+            gap: 2rem; padding: 3rem; max-width: 1200px; margin: auto;
+        }
 
-    #buscador:focus {
-        border-color: var(--accent);
-        outline: none;
-        box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
-    }
+        .card { 
+            background: var(--card-bg); border-radius: 12px; padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); transition: transform 0.2s;
+            border: 1px solid #f1f5f9; display: flex; flex-direction: column;
+        }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
+        .card h2 { margin-top: 0; color: var(--primary); font-size: 1.3rem; }
+        .card p { color: var(--text-light); font-size: 0.95rem; flex-grow: 1; }
 
-    /* Grid Organizado */
-    #grid-apuntes {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-        gap: 24px;
-        padding: 40px;
-        max-width: 1400px; margin: auto;
-    }
+        .btn { 
+            background: var(--primary); color: white; border: none; 
+            padding: 0.7rem; border-radius: 8px; cursor: pointer;
+            font-weight: 600; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.5px;
+            margin-top: 1rem; transition: background 0.2s;
+        }
+        .btn:hover { background: #2563eb; }
 
-    /* Tarjetas Tipo SaaS */
-    .card {
-        background: var(--bg-card);
-        border: 1px solid rgba(255,255,255,0.05);
-        border-radius: 12px;
-        padding: 24px;
-        transition: transform 0.2s, box-shadow 0.2s;
-        display: flex; flex-direction: column;
-    }
-
-    .card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
-        border-color: rgba(255,255,255,0.1);
-    }
-
-    .badge {
-        font-size: 0.75rem; font-weight: 600;
-        text-transform: uppercase; letter-spacing: 0.05em;
-        color: var(--accent); margin-bottom: 8px;
-    }
-
-    .btn {
-        background: var(--accent);
-        color: var(--bg-main);
-        border: none; border-radius: 6px;
-        padding: 10px; font-weight: 600;
-        cursor: pointer; margin-top: auto;
-        transition: filter 0.2s;
-    }
-
-    .btn:hover { filter: brightness(1.1); }
-
-    /* Visor mejorado */
-    #visor-pdf {
-        background: #111;
-        border-radius: 8px;
-        overflow: hidden;
-        border: 1px solid rgba(255,255,255,0.1);
-    }
-</style>
+        /* Visor de PDF Profesional */
+        .dashboard-container { display: grid; grid-template-columns: 300px 1fr; gap: 2rem; padding: 2rem; }
+        .sidebar { background: white; padding: 1rem; border-radius: 12px; border: 1px solid #e2e8f0; height: fit-content; }
+        .unit-item { 
+            padding: 1rem; border-bottom: 1px solid #f1f5f9; cursor: pointer; 
+            border-radius: 6px; transition: 0.2s;
+        }
+        .unit-item:hover { background: #eff6ff; color: var(--primary); }
+        #visor-pdf { background: #334155; border-radius: 12px; height: 800px; overflow: hidden; }
+    </style>
 </head>
 <body>
-    <header class="page-header">
-        <h1>> S.I.L.V.A. <br><small style="font-size: 0.4em; letter-spacing: 2px;">ADVANCED SYSTEMS INTERFACE</small></h1>
-        <input type="text" id="buscador" placeholder="AGUARDANDO COMANDO...">
+    <header>
+        <h1>Centro de Estudios ASIR</h1>
+        <div class="search-container">
+            <input type="text" id="buscador" placeholder="Buscar unidades o comandos...">
+        </div>
     </header>
-
     <main id="grid-apuntes"></main>
-
     <script src="main.js"></script>
 </body>
 </html>
