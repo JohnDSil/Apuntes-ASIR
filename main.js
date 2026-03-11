@@ -1,6 +1,6 @@
 /**
  * ARCHIVO MECÁNICO - MOTOR DE NAVEGACIÓN SPA
- * Desarrollado para el Sr. Silva - 1º ASIR
+ * Versión Blindada para el Sr. Silva
  */
 
 async function cargarSistema() {
@@ -17,7 +17,8 @@ async function cargarSistema() {
 
 function renderizarPortada() {
     const contenedor = document.getElementById('grid-apuntes');
-    contenedor.style.display = "grid"; // Aseguramos que sea grid
+    // Forzamos el diseño de cuadrícula para la portada
+    contenedor.style.display = "grid"; 
     contenedor.innerHTML = window.datosAsignaturas.map(asig => `
         <article class="card">
             <div class="badge">${asig.estado}</div>
@@ -30,11 +31,11 @@ function renderizarPortada() {
 
 function navegarA(siglas) {
     const contenedor = document.getElementById('grid-apuntes');
-    contenedor.style.display = "block"; // Cambiamos a bloque para el dashboard
+    // Cambiamos a bloque para que el dashboard ocupe todo el ancho
+    contenedor.style.display = "block"; 
     
     let contenidoExtra = "";
 
-    // Lógica específica por asignatura
     if (siglas === 'PAR') {
         const unidades = [
             { id: 1, t: "Caracterización de Redes", f: "ud1_caracterizacionRedes%20(1).pdf" },
@@ -62,7 +63,26 @@ function navegarA(siglas) {
             </div>
         `;
     } else {
-        // Para ISO y otras, cargamos el README en un panel
+        // Fallback para otras asignaturas (ISO, LMSGI...)
         contenidoExtra = `
             <div style="margin-top:20px;">
-                <iframe src="./${siglas}/README.md" style="width:100%; height:600px; border:2px solid
+                <iframe src="./${siglas}/README.md" style="width:100%; height:600px; border:2px solid var(--cobre); background:#fff;"></iframe>
+            </div>
+        `;
+    }
+
+    contenedor.innerHTML = `
+        <button onclick="renderizarPortada()" class="btn" style="margin-bottom:20px;">⬅ VOLVER AL MENÚ PRINCIPAL</button>
+        <h2 style="color:var(--cian); border-bottom:1px solid var(--cobre); padding-bottom:10px;">📂 DASHBOARD: ${siglas}</h2>
+        ${contenidoExtra}
+    `;
+}
+
+function cargarVisor(ruta) {
+    const visor = document.getElementById('visor-pdf');
+    // Usamos <embed> para visualizar el PDF directamente
+    visor.innerHTML = `<embed src="${ruta}" type="application/pdf" width="100%" height="100%" />`;
+}
+
+// Punto de entrada del programa
+window.onload = cargarSistema;
