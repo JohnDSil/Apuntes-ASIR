@@ -1,27 +1,38 @@
-// Función para cargar los apuntes
-async function cargarApuntes() {
+/**
+ * Motor de renderizado de apuntes - Sr. Silva
+ */
+async function inicializarArchivo() {
     try {
+        // 1. Pedimos los datos al archivo JSON
         const respuesta = await fetch('apuntes.json');
-        const datos = await respuesta.json();
-        
-        const contenedor = document.getElementById('contenedor-apuntes');
-        contenedor.innerHTML = ""; // Limpiamos el mensaje de carga
+        const apuntes = await respuesta.json();
 
-        datos.forEach(asig => {
-            const card = `
-                <div class="tarjeta-asignatura">
+        // 2. Localizamos el contenedor en el HTML
+        const contenedor = document.getElementById('grid-apuntes');
+        contenedor.innerHTML = ""; // Limpiar mensaje de carga
+
+        // 3. Generamos las tarjetas dinámicamente
+        apuntes.forEach(asig => {
+            const cardHTML = `
+                <article class="card">
+                    <span class="badge">${asig.estado}</span>
                     <h3>${asig.siglas}</h3>
                     <p>${asig.nombre}</p>
-                    <span class="badge">${asig.estado}</span>
-                    <a href="${asig.url}" class="btn">ACCEDER</a>
-                </div>
+                    <small style="display:block; margin-bottom:15px; color:#d1d1d1;">
+                        ${asig.descripcion}
+                    </small>
+                    <a href="${asig.enlace}" class="btn">ACCEDER A DATOS</a>
+                </article>
             `;
-            contenedor.innerHTML += card;
+            contenedor.innerHTML += cardHTML;
         });
+
+        console.log("✅ Sistemas de datos sincronizados.");
     } catch (error) {
-        console.error("Error en la transmisión de datos:", error);
+        console.error("❌ Error en la matriz de datos:", error);
+        document.getElementById('grid-apuntes').innerHTML = "<p>Error en la transmisión de datos.</p>";
     }
 }
 
-// Ejecutar al cargar la página
-window.onload = cargarApuntes;
+// Iniciar al cargar la ventana
+window.onload = inicializarArchivo;;
