@@ -1,14 +1,7 @@
 [
-  {
-    "siglas": "ISO",
-    "nombre": "Implantación de S.O.",
-    "estado": "SYSTEM_OK",
-    "enlace": "./ISO/README.md"
-  },
-  {
-    "siglas": "PAR",
-    "nombre": "Redes",
-    "estado": "DATA_LOADED",
-    "enlace": "./Redes/README.md"
-  }
+  { "siglas": "ISO", "nombre": "Implantación de Sistemas Operativos", "estado": "OK" },
+  { "siglas": "PAR", "nombre": "Planificación y Admin. de Redes", "estado": "OK" },
+  { "siglas": "GBD", "nombre": "Gestión de Bases de Datos", "estado": "OK" },
+  { "siglas": "FH", "nombre": "Fundamentos de Hardware", "estado": "OK" },
+  { "siglas": "LMSGI", "nombre": "Lenguajes de Marcas", "estado": "OK" }
 ]
