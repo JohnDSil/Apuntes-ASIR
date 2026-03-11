@@ -7,14 +7,14 @@
   "estado": "🟢 Al día",
   "enlace": "./ISO/README.md"
 },
-  {
-    "id": 2,
-    "siglas": "PAR",
-    "nombre": "Redes",
-    "descripcion": "Configuración de routers, switches y direccionamiento IP.",
-    "estado": "🟡 Actualizando",
-    "enlace": "./Redes/README.md"
-  },
+ {
+  "id": 2,
+  "siglas": "PAR",
+  "nombre": "Planificación de Redes",
+  "descripcion": "Unidades de la 1 a la 6: OSI, TCP/IP y Cisco.",
+  "estado": "🟢 Temario Completo",
+  "enlace": "./Redes/ud1_caracterizacionRedes%20(1).pdf"
+},
   {
     "id": 3,
     "siglas": "LMSGI",
