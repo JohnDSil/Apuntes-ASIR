@@ -1,0 +1,79 @@
+---
+---
+@import "{{ site.theme }}";
+
+// --- Paleta de Colores Steampunk ---
+$color-fondo: #2e1e12; // Marrón oscuro cuero
+$color-texto: #f4e9cd; // Crema vintage
+$color-cobre: #b87333; // Cobre metálico
+$color-oro: #daa520;   // Oro viejo
+$color-acero: #a9a9a9; // Acero remachado
+$color-enlaces: #e9967a; // Salmón cobrizo
+
+// --- Estilos Globales ---
+body {
+  background-color: $color-fondo;
+  color: $color-texto;
+  font-family: 'Special Elite', 'Courier New', Courier, monospace; // Tipografía tipo máquina de escribir
+}
+
+// --- Cabecera (El Banner Superior) ---
+.page-header {
+  background-color: $color-fondo;
+  background-image: url('https://johndsil.github.io/Apuntes-ASIR/assets/img/header-bg.jpg'); // Fondo metálico
+  border-bottom: 5px solid $color-cobre;
+  color: $color-cobre;
+}
+
+// --- Texto Principal (H1, H2, H3) ---
+.project-name, .project-tagline {
+  color: $color-cobre !important;
+  text-shadow: 2px 2px 4px #000;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: $color-oro;
+  border-bottom-color: $color-cobre;
+}
+
+// --- Enlaces ---
+a {
+  color: $color-enlaces;
+  &:hover {
+    color: lighten($color-enlaces, 15%);
+    text-decoration: underline;
+  }
+}
+
+// --- Botones (Los enlaces de la tabla) ---
+.btn {
+  background-color: transparent;
+  border: 2px solid $color-cobre;
+  color: $color-cobre;
+  border-radius: 0; // Botones cuadrados, más mecánicos
+  &:hover {
+    background-color: lighten($color-cobre, 10%);
+    color: $color-fondo;
+  }
+}
+
+// --- Tablas de Apuntes ---
+table {
+  border: 2px solid $color-cobre;
+  color: $color-texto;
+  thead {
+    background-color: transparent;
+    border-bottom: 2px solid $color-cobre;
+    color: $color-oro;
+  }
+  th, td {
+    border: 1px solid $color-acero;
+  }
+}
+
+// --- Fondo para bloques de código y blockquotes ---
+pre, blockquote {
+  background-color: rgba($color-cobre, 0.1);
+  border-left-color: $color-cobre;
+  color: $color-acero;
+}
