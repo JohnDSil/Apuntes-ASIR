@@ -1,0 +1,14 @@
+[
+  {
+    "siglas": "ISO",
+    "nombre": "Implantación de S.O.",
+    "estado": "Al día",
+    "url": "./ISO/README.md"
+  },
+  {
+    "siglas": "PAR",
+    "nombre": "Redes",
+    "estado": "Actualizando",
+    "url": "./Redes/README.md"
+  }
+]
