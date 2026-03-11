@@ -111,12 +111,13 @@ function navegarA(siglas) {
                     <p style="text-align:center; padding-top:350px;">SELECCIONE MÓDULO...</p>
                 </div>
             </div>`;
-    } else {
-        contenedor.innerHTML = `
-            <button onclick="renderizarPortada(window.datosAsignaturas)" class="btn">< VOLVER</button>
-            <h2 style="color:#00ffff">${siglas} > README</h2>
-            <iframe src="./${siglas}/README.md" style="width:100%; height:750px; border:2px solid #00ffff; background:#fff; margin-top:20px;"></iframe>`;
-    }
+   // Si su carpeta se llama "Hardware" y no "FH", cambie el enlace aquí:
+else {
+    contenedor.innerHTML = `
+        <button onclick="renderizarPortada(window.datosAsignaturas)" class="btn">< VOLVER</button>
+        <h2 style="color:#00ffff">${siglas} > README</h2>
+        <iframe src="./${siglas}/README.md" style="width:100%; height:750px; border:2px solid #00ffff; background:#fff; margin-top:20px;"></iframe>`;
+}
 }
 
 function cargarVisor(ruta) {
