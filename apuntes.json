@@ -1,14 +1,26 @@
 [
   {
+    "id": 1,
     "siglas": "ISO",
     "nombre": "Implantación de S.O.",
-    "estado": "Al día",
-    "url": "./ISO/README.md"
+    "descripcion": "Gestión de procesos, memoria y scripts en Bash/PowerShell.",
+    "estado": "🟢 Al día",
+    "enlace": "./ISO/README.md"
   },
   {
+    "id": 2,
     "siglas": "PAR",
     "nombre": "Redes",
-    "estado": "Actualizando",
-    "url": "./Redes/README.md"
+    "descripcion": "Configuración de routers, switches y direccionamiento IP.",
+    "estado": "🟡 Actualizando",
+    "enlace": "./Redes/README.md"
+  },
+  {
+    "id": 3,
+    "siglas": "LMSGI",
+    "nombre": "Lenguajes de Marcas",
+    "descripcion": "HTML5, CSS3, XML y ahora... ¡JSON!",
+    "estado": "🔵 Prácticas",
+    "enlace": "./Lenguaje_Marcas/README.md"
   }
 ]
