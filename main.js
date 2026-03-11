@@ -11,11 +11,25 @@ const comandoDiccionario = {
     "osi": { desc: "Modelo de 7 capas de red.", cat: "PAR" }
 };
 
-// Banco de preguntas para el entrenamiento
 const preguntasTest = [
-    { q: "¿En qué capa de OSI trabaja un Switch?", a: "2", cat: "PAR" },
-    { q: "¿Qué comando Linux cambia permisos?", a: "chmod", cat: "ISO" },
-    { q: "¿Siglas de Structured Query Language?", a: "sql", cat: "GBD" }
+    // --- REDES (PAR) ---
+    { q: "¿En qué capa del modelo OSI trabaja un Router?", a: "3", cat: "PAR" },
+    { q: "¿Qué protocolo se usa para asignar IPs de forma automática?", a: "dhcp", cat: "PAR" },
+    { q: "¿Cuál es la máscara por defecto de una red Clase C (ej: 192.168.1.0)?", a: "255.255.255.0", cat: "PAR" },
+    
+    // --- SISTEMAS (ISO) ---
+    { q: "Comando Linux para ver el manual de una instrucción:", a: "man", cat: "ISO" },
+    { q: "Símbolo que representa el directorio raíz en Linux:", a: "/", cat: "ISO" },
+    { q: "Comando para cambiar el propietario de un archivo:", a: "chown", cat: "ISO" },
+    
+    // --- BASES DE DATOS (GBD) ---
+    { q: "Sentencia SQL para borrar todos los datos de una tabla sin borrar la tabla:", a: "truncate", cat: "GBD" },
+    { q: "¿Qué cláusula SQL se usa para filtrar resultados?", a: "where", cat: "GBD" },
+    { q: "¿Cómo se llama la clave que identifica de forma única una fila?", a: "primary key", cat: "GBD" },
+    
+    // --- HARDWARE (FH) ---
+    { q: "¿Qué componente realiza las operaciones aritméticas y lógicas?", a: "cpu", cat: "GENERIC" },
+    { q: "¿Qué memoria es volátil y pierde los datos al apagar el equipo?", a: "ram", cat: "GENERIC" }
 ];
 
 async function cargarSistema() {
