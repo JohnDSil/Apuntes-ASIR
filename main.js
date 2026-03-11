@@ -1,47 +1,33 @@
 /**
- * SISTEMA OPERATIVO S.I.L.V.A. - NÚCLEO INTEGRAL
- * Versión 4.0: Dashboard Total + Simulador + Diccionario
+ * MOTOR ACADÉMICO S.I.L.V.A. - FULL VERSION 2026
+ * Dashboard Profesional + Soporte Multidisciplinar + Simulador
  */
 
-// 1. DICCIONARIO TÉCNICO CON CATEGORÍAS
-const comandoDiccionario = {
-    "ping": { desc: "ICMP: Diagnóstico de conectividad de red.", cat: "PAR" },
-    "osi": { desc: "Modelo de 7 capas para estandarizar redes.", cat: "PAR" },
-    "chmod": { desc: "Linux: Cambia permisos de archivos/carpetas.", cat: "ISO" },
-    "chown": { desc: "Linux: Cambia el propietario de un archivo.", cat: "ISO" },
-    "select": { desc: "SQL: Recupera datos de una tabla.", cat: "GBD" },
-    "truncate": { desc: "SQL: Vacía una tabla sin borrar su estructura.", cat: "GBD" },
-    "bios": { desc: "Firmware que inicia el hardware del sistema.", cat: "FH" },
-    "cpu": { desc: "Unidad Central de Procesamiento: el cerebro.", cat: "FH" },
-    "xml": { desc: "Lenguaje de marcas extensible para datos.", cat: "LMSGI" },
-    "xpath": { desc: "Lenguaje para navegar nodos en un XML.", cat: "LMSGI" }
-};
-
-// 2. BANCO DE 20 PREGUNTAS DE EXAMEN
+// 1. BANCO DE PREGUNTAS (20 cuestiones clave de 1º ASIR)
 const preguntasTest = [
-    { q: "¿En qué capa OSI trabaja un Switch?", a: "2", cat: "PAR" },
-    { q: "¿Qué protocolo asigna IPs dinámicas?", a: "dhcp", cat: "PAR" },
+    { q: "¿En qué capa del modelo OSI opera un Router?", a: "3", cat: "PAR" },
+    { q: "¿En qué capa opera un Switch?", a: "2", cat: "PAR" },
+    { q: "¿Qué protocolo asigna IPs automáticas?", a: "dhcp", cat: "PAR" },
     { q: "¿Puerto por defecto de HTTPS?", a: "443", cat: "PAR" },
-    { q: "¿Protocolo para resolución de nombres?", a: "dns", cat: "PAR" },
-    { q: "¿Capa OSI donde operan los Routers?", a: "3", cat: "PAR" },
-    { q: "¿Comando Linux para ver el manual?", a: "man", cat: "ISO" },
-    { q: "¿Símbolo del directorio raíz en Linux?", a: "/", cat: "ISO" },
-    { q: "¿Directorio de configuraciones en Linux?", a: "/etc", cat: "ISO" },
+    { q: "¿Protocolo para resolución de nombres de dominio?", a: "dns", cat: "PAR" },
+    { q: "¿Comando Linux para cambiar permisos?", a: "chmod", cat: "ISO" },
+    { q: "¿Comando Linux para cambiar el dueño de un archivo?", a: "chown", cat: "ISO" },
+    { q: "¿Directorio de configuraciones globales en Linux?", a: "/etc", cat: "ISO" },
     { q: "¿Comando para listar procesos en tiempo real?", a: "top", cat: "ISO" },
-    { q: "¿Cláusula SQL para filtrar resultados?", a: "where", cat: "GBD" },
-    { q: "¿Sentencia SQL para añadir datos?", a: "insert", cat: "GBD" },
-    { q: "¿Clave que relaciona dos tablas?", a: "foreign key", cat: "GBD" },
-    { q: "¿Propiedad ACID de transacciones 'todo o nada'?", a: "atomicidad", cat: "GBD" },
-    { q: "¿Memoria que pierde datos al apagar el PC?", a: "ram", cat: "FH" },
-    { q: "¿Componente que realiza cálculos lógicos?", a: "cpu", cat: "FH" },
-    { q: "¿Etiqueta HTML para enlaces?", a: "a", cat: "LMSGI" },
-    { q: "¿Etiqueta para una lista no ordenada?", a: "ul", cat: "LMSGI" },
-    { q: "¿Atributo para enlazar CSS externo?", a: "href", cat: "LMSGI" },
-    { q: "¿Es XML un lenguaje de programación?", a: "no", cat: "LMSGI" },
-    { q: "¿Etiqueta raíz obligatoria en HTML?", a: "html", cat: "LMSGI" }
+    { q: "¿Cómo se llama el intérprete de comandos por defecto?", a: "bash", cat: "ISO" },
+    { q: "¿Qué comando SQL se usa para insertar datos?", a: "insert", cat: "GBD" },
+    { q: "¿Qué cláusula SQL se usa para filtrar resultados?", a: "where", cat: "GBD" },
+    { q: "¿Sentencia SQL para borrar datos sin borrar la tabla?", a: "truncate", cat: "GBD" },
+    { q: "¿Clave que relaciona dos tablas en una BBDD?", a: "foreign key", cat: "GBD" },
+    { q: "¿Siglas de Structured Query Language?", a: "sql", cat: "GBD" },
+    { q: "¿Etiqueta HTML para crear una lista no ordenada?", a: "ul", cat: "LMSGI" },
+    { q: "¿Qué significan las siglas XML?", a: "extensible markup language", cat: "LMSGI" },
+    { q: "¿Lenguaje para realizar consultas sobre XML?", a: "xpath", cat: "LMSGI" },
+    { q: "¿Atributo para enlazar un archivo CSS externo?", a: "href", cat: "LMSGI" },
+    { q: "¿Qué memoria pierde los datos al apagar el PC?", a: "ram", cat: "FH" }
 ];
 
-// 3. CARGA INICIAL DEL SISTEMA
+// 2. CARGA INICIAL Y BUSCADOR
 async function cargarSistema() {
     const contenedor = document.getElementById('grid-apuntes');
     const inputBuscador = document.getElementById('buscador');
@@ -53,53 +39,48 @@ async function cargarSistema() {
 
         inputBuscador.addEventListener('input', (e) => {
             const val = e.target.value.toLowerCase();
-            
-            // Notificación si el comando existe
-            if (comandoDiccionario[val]) {
-                const cmd = comandoDiccionario[val];
-                mostrarNotificacion(cmd.desc, cmd.cat);
-            }
-
-            // Filtrado de tarjetas
             const filtrados = window.datosAsignaturas.filter(a => 
                 a.nombre.toLowerCase().includes(val) || a.siglas.toLowerCase().includes(val)
             );
             renderizarPortada(filtrados);
         });
     } catch (error) {
-        contenedor.innerHTML = `<p style="color:red; text-align:center;">⚠️ FALLO DE NÚCLEO: REVISE apuntes.json</p>`;
+        contenedor.innerHTML = `<div style="text-align:center; padding:2rem;">⚠️ Error al cargar el núcleo de datos.</div>`;
     }
 }
 
-// 4. RENDERIZADO DE PORTADA (TARJETAS)
+// 3. RENDERIZADO DE LA PORTADA
 function renderizarPortada(datos) {
     const contenedor = document.getElementById('grid-apuntes');
     contenedor.style.display = "grid";
+    
     let html = datos.map(asig => `
         <article class="card">
-            <div class="badge">SYSTEM_OK</div>
             <h2>${asig.siglas}</h2>
             <p>${asig.nombre}</p>
-            <button onclick="navegarA('${asig.siglas}')" class="btn">ACCEDER AL NÚCLEO</button>
+            <button onclick="navegarA('${asig.siglas}')" class="btn">Abrir Materiales</button>
         </article>
     `).join('');
     
+    // Tarjeta del Simulador
     html += `
-        <article class="card" style="border: 2px dashed #ff0055;">
-            <div class="badge" style="background:#ff0055; color:#fff;">WAR_GAME</div>
-            <h2>TEST DE EXAMEN</h2>
-            <button onclick="iniciarTest()" class="btn" style="border-color:#ff0055; color:#ff0055">INICIAR SIMULACIÓN</button>
+        <article class="card" style="border: 2px dashed #cbd5e1; background: #f1f5f9;">
+            <h2 style="color: #64748b;">Simulador de Examen</h2>
+            <p>Ponte a prueba con 20 preguntas aleatorias del temario oficial.</p>
+            <button onclick="iniciarTest()" class="btn" style="background: #64748b;">Iniciar Test</button>
         </article>`;
+    
     contenedor.innerHTML = html;
 }
 
-// 5. NAVEGACIÓN Y DASHBOARDS
+// 4. NAVEGACIÓN ENTRE ASIGNATURAS Y DASHBOARDS
 function navegarA(siglas) {
     const contenedor = document.getElementById('grid-apuntes');
     contenedor.style.display = "block";
     let unidades = [];
     let carpeta = "";
 
+    // Mapeo de contenidos según la asignatura
     if (siglas === 'PAR') {
         carpeta = "Redes";
         unidades = [
@@ -110,71 +91,78 @@ function navegarA(siglas) {
             { id: 5, t: "Switches Cisco", f: "ud5_switchesCisco.pdf" },
             { id: 6, t: "Routers Cisco", f: "ud6_routerCisco.pdf" }
         ];
+    } else if (siglas === 'GBD') {
+        carpeta = "Base de Datos";
+        unidades = [
+            { id: 1, t: "Lenguaje DDL (Creación)", f: "ud1_DDL.pdf" },
+            { id: 2, t: "Comandos SQL", f: "ud2_comandosSQL.pdf" },
+            { id: 3, t: "Consultas Simples", f: "ud3_consultas.pdf" },
+            { id: 4, t: "Subconsultas", f: "ud4_subConsultas.pdf" }
+        ];
     } else if (siglas === 'LMSGI') {
         carpeta = "Lenguaje de Marcas";
         unidades = [
             { id: 1, t: "XML y Estructuras", f: "ud1_XML.pdf" },
             { id: 2, t: "XPath y XQuery", f: "ud2_xpathXquery.pdf" },
-            { id: 3, t: "HTML5: Estructura", f: "ud3_HTML.pdf" },
-            { id: 4, t: "CSS3: Estilo", f: "ud4_css.pdf" },
+            { id: 3, t: "HTML5 Profesional", f: "ud3_HTML.pdf" },
+            { id: 4, t: "CSS3 Diseño", f: "ud4_css.pdf" },
             { id: 5, t: "Introducción JS", f: "ud5_javascript.pdf" }
         ];
     }
 
+    // Renderizado del Dashboard con Sidebar o del README por defecto
     if (unidades.length > 0) {
         contenedor.innerHTML = `
-            <button onclick="renderizarPortada(window.datosAsignaturas)" class="btn" style="width:200px; margin-bottom:20px;">< VOLVER</button>
-            <h2 style="color:#00ffff">${siglas} > DASHBOARD INTERACTIVO</h2>
-            <div style="display:grid; grid-template-columns: 1fr 3fr; gap:20px; margin-top:20px;">
-                <div id="lista-unidades">
+            <div style="margin-bottom: 2rem; max-width: 1200px; margin: auto; padding: 0 1rem;">
+                <button onclick="renderizarPortada(window.datosAsignaturas)" class="btn" style="background:#64748b; width:150px;">< Volver</button>
+            </div>
+            <div class="dashboard-container">
+                <div class="sidebar">
+                    <h3 style="margin-top:0; font-size:1.1rem; color:#1e293b;">Unidades Disponibles</h3>
                     ${unidades.map(u => `
-                        <div class="card" style="margin-bottom:10px; cursor:pointer; padding:10px;" onclick="cargarVisor('./${carpeta}/${u.f}')">
-                            <small class="badge">UD ${u.id}</small><br>
-                            <h4 style="margin:5px 0;">${u.t}</h4>
+                        <div class="unit-item" onclick="cargarVisor('./${carpeta}/${u.f}')">
+                            <strong style="color:#3b82f6;">UD ${u.id}</strong><br>
+                            <span style="font-size:0.85rem;">${u.t}</span>
                         </div>
                     `).join('')}
                 </div>
-                <div id="visor-pdf" style="border:2px solid #00ffff; height:750px; background:#000;">
-                    <p style="text-align:center; padding-top:350px; color:#666;">SELECCIONE MÓDULO PARA VISUALIZAR</p>
+                <div id="visor-pdf">
+                    <div style="text-align:center; padding-top:300px; color:#cbd5e1;">
+                        <p style="font-size:1.2rem;">📂 Seleccione una unidad del menú lateral</p>
+                    </div>
                 </div>
             </div>`;
     } else {
-        // Fallback para GBD, FH e ISO si cargan desde README
+        // Para asignaturas sin PDFs definidos (ISO, FH), cargamos su README
         contenedor.innerHTML = `
-            <button onclick="renderizarPortada(window.datosAsignaturas)" class="btn" style="margin-bottom:20px;">< VOLVER</button>
-            <h2 style="color:#00ffff">${siglas} > DOCUMENTACIÓN</h2>
-            <iframe src="./${siglas}/README.md" style="width:100%; height:750px; border:2px solid #00ffff; background:#fff;"></iframe>`;
+            <div style="margin-bottom: 2rem; max-width: 1200px; margin: auto; padding: 0 1rem;">
+                <button onclick="renderizarPortada(window.datosAsignaturas)" class="btn" style="background:#64748b; width:150px;">< Volver</button>
+            </div>
+            <div style="max-width:1200px; margin:auto; background:white; padding:2rem; border-radius:12px; border:1px solid #e2e8f0;">
+                <h2 style="color:#3b82f6;">${siglas} > Documentación</h2>
+                <iframe src="./${siglas}/README.md" style="width:100%; height:700px; border:none; margin-top:1rem;"></iframe>
+            </div>`;
     }
 }
 
-// 6. FUNCIONES AUXILIARES (VISOR, NOTIFICACIÓN, TEST)
+// 5. FUNCIONES DEL VISOR Y SIMULADOR
 function cargarVisor(ruta) {
-    document.getElementById('visor-pdf').innerHTML = `<embed src="${ruta}" type="application/pdf" width="100%" height="100%" />`;
-}
-
-function mostrarNotificacion(msj, cat) {
-    const paleta = { 'PAR': '#00ffff', 'GBD': '#e68a00', 'ISO': '#00ff00', 'LMSGI': '#ff00ff', 'GENERIC': '#ffffff' };
-    const color = paleta[cat] || paleta['GENERIC'];
-    
-    let aviso = document.createElement('div');
-    aviso.className = "notificacion-popup";
-    aviso.style = `position:fixed; bottom:20px; right:20px; background:#000; color:${color}; 
-                   padding:20px; border:2px solid ${color}; font-family:monospace; 
-                   box-shadow: 0 0 15px ${color}; z-index:1000;`;
-    aviso.innerHTML = `> [${cat}] INFO: ${msj}`;
-    document.body.appendChild(aviso);
-    setTimeout(() => { aviso.style.opacity = "0"; setTimeout(() => aviso.remove(), 500); }, 4000);
+    const visor = document.getElementById('visor-pdf');
+    visor.innerHTML = `<embed src="${ruta}" type="application/pdf" width="100%" height="100%" style="border-radius:8px;" />`;
 }
 
 function iniciarTest() {
     const p = preguntasTest[Math.floor(Math.random() * preguntasTest.length)];
-    const r = prompt(`[S.I.L.V.A. SIMULADOR DE EXAMEN]\nCATEGORÍA: ${p.cat}\n\nPREGUNTA: ${p.q}`);
-    if (r && r.toLowerCase() === p.a.toLowerCase()) {
-        alert("✔️ ACCESO CONCEDIDO: Respuesta correcta.");
-    } else {
-        alert(`❌ ACCESO DENEGADO: La respuesta era "${p.a}"`);
+    const r = prompt(`[S.I.L.V.A. SIMULADOR - ${p.cat}]\n\nPREGUNTA: ${p.q}`);
+    
+    if (r !== null) {
+        if (r.toLowerCase().trim() === p.a.toLowerCase()) {
+            alert("✅ CORRECTO. Acceso concedido.");
+        } else {
+            alert(`❌ INCORRECTO. La respuesta esperada era: ${p.a}`);
+        }
     }
 }
 
-// ARRANQUE DEL SISTEMA
+// 6. LANZAMIENTO
 window.onload = cargarSistema;
