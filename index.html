@@ -1,121 +1,656 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S.I.L.V.A. Academy // Gestión ASIR</title>
-    <link rel="icon" href="data:,">
-    <style>
-        :root {
-            --bg-dark: #000000;
-            --card-bg: #111111;
-            --accent: #00a3ff;
-            --text-main: #ffffff;
-            --text-muted: #888888;
-            --border: #222222;
-            --success: #00ff41;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>S.I.L.V.A. Academy — Plataforma ASIR</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Instrument+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:        #f4f3ef;
+  --surface:   #ffffff;
+  --surface2:  #f9f8f5;
+  --border:    #e2e0d8;
+  --border2:   #cccac0;
+  --ink:       #0f0e0b;
+  --ink2:      #3a3830;
+  --muted:     #8a8778;
+  --accent:    #1a56f0;
+  --accent-l:  #e8effe;
+  --success:   #0a7a4c;
+  --danger:    #c9243f;
+  --warn:      #b85c00;
+  --tag-bg:    #eeecea;
+  --f-display: 'Syne', sans-serif;
+  --f-body:    'Instrument Sans', sans-serif;
+  --f-mono:    'JetBrains Mono', monospace;
+  --radius-sm: 6px;
+  --radius:    10px;
+  --radius-lg: 16px;
+  --shadow:    0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 24px rgba(0,0,0,0.10);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.6;overflow-x:hidden;}
 
-        body { 
-            background-color: var(--bg-dark); 
-            color: var(--text-main); 
-            font-family: 'Inter', system-ui, sans-serif; 
-            margin: 0; overflow-x: hidden;
-        }
+/* TOPBAR */
+#topbar{position:sticky;top:0;z-index:500;background:rgba(244,243,239,0.93);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 2rem;height:60px;gap:2rem;}
+.logo-mark{display:flex;align-items:center;gap:10px;font-family:var(--f-display);font-weight:800;font-size:1.05rem;letter-spacing:-.3px;color:var(--ink);white-space:nowrap;}
+.logo-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0;}
+#topbar-meta{display:flex;gap:1.5rem;font-family:var(--f-mono);font-size:.68rem;color:var(--muted);align-items:center;}
+#topbar-meta .live{display:flex;align-items:center;gap:5px;color:var(--success);}
+#topbar-meta .live::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--success);animation:pulse 2s ease infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
+#search-wrap{margin-left:auto;position:relative;}
+#buscador{background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius-sm);color:var(--ink);font-family:var(--f-mono);font-size:.72rem;padding:.5rem .9rem .5rem 2.2rem;width:240px;transition:all .2s;}
+#buscador:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(26,86,240,.12);width:280px;}
+#search-wrap::before{content:'⌕';position:absolute;left:.7rem;top:50%;transform:translateY(-50%);color:var(--muted);font-size:1rem;pointer-events:none;}
 
-        header { padding: 3rem 2rem; text-align: center; border-bottom: 1px solid var(--border); }
-        
-        #system-status {
-            font-family: 'Fira Code', monospace; font-size: 0.7rem;
-            color: var(--accent); margin-bottom: 1rem;
-            display: flex; justify-content: center; gap: 20px;
-        }
+/* HERO */
+#hero{padding:5rem 2rem 4rem;max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;}
+.hero-label{font-family:var(--f-mono);font-size:.68rem;letter-spacing:2px;color:var(--accent);text-transform:uppercase;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem;}
+.hero-label::before{content:'';display:inline-block;width:20px;height:1px;background:var(--accent);}
+.hero-title{font-family:var(--f-display);font-size:clamp(2.4rem,4vw,3.4rem);font-weight:800;line-height:1.05;letter-spacing:-1.5px;color:var(--ink);margin-bottom:1.2rem;}
+.hero-title em{font-style:normal;color:var(--accent);}
+.hero-sub{font-size:1rem;color:var(--muted);line-height:1.7;max-width:420px;margin-bottom:2rem;}
+.hero-actions{display:flex;gap:.75rem;flex-wrap:wrap;}
+.btn-primary{background:var(--ink);color:#fff;border:none;border-radius:var(--radius-sm);padding:.7rem 1.4rem;font-family:var(--f-body);font-weight:600;font-size:.85rem;cursor:pointer;transition:all .18s;}
+.btn-primary:hover{background:var(--accent);transform:translateY(-1px);}
+.btn-ghost{background:transparent;color:var(--ink2);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:.7rem 1.4rem;font-family:var(--f-body);font-weight:500;font-size:.85rem;cursor:pointer;transition:all .18s;}
+.btn-ghost:hover{border-color:var(--ink);color:var(--ink);}
+.hero-stats{display:flex;flex-direction:column;gap:1.5rem;}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.5rem 1.8rem;box-shadow:var(--shadow);animation:fadeUp .5s ease both;}
+.stat-card:nth-child(2){animation-delay:.1s;margin-left:2rem;}
+.stat-card:nth-child(3){animation-delay:.2s;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+.stat-num{font-family:var(--f-display);font-size:2.2rem;font-weight:800;color:var(--ink);line-height:1;letter-spacing:-1px;}
+.stat-label{font-size:.8rem;color:var(--muted);margin-top:.3rem;}
 
-        .logo { font-size: 2rem; font-weight: 800; letter-spacing: -1.5px; }
+/* MAIN VIEW */
+#main-view{padding:0 2rem 160px;max-width:1200px;margin:0 auto;}
+.section-header{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:1.5rem;padding-bottom:.75rem;border-bottom:1px solid var(--border);}
+.section-title{font-family:var(--f-display);font-size:1.1rem;font-weight:700;color:var(--ink);letter-spacing:-.3px;}
+.section-count{font-family:var(--f-mono);font-size:.68rem;color:var(--muted);}
 
-        #buscador {
-            background: var(--card-bg); border: 1px solid var(--border);
-            border-radius: 8px; color: white; padding: 0.8rem 1.2rem;
-            width: 100%; max-width: 450px; font-size: 0.9rem; margin-top: 1rem;
-            transition: 0.3s;
-        }
-        #buscador:focus { border-color: var(--accent); outline: none; }
+/* GRID MODULOS */
+#modulos-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;margin-bottom:3rem;box-shadow:var(--shadow);}
+.modulo-card{background:var(--surface);padding:1.8rem;cursor:pointer;transition:background .15s;display:flex;flex-direction:column;gap:1rem;position:relative;animation:fadeUp .4s ease both;}
+.modulo-card:hover{background:var(--surface2);}
+.modulo-card:hover .card-arrow{opacity:1;transform:translateX(0);}
+.card-arrow{position:absolute;top:1.8rem;right:1.8rem;font-size:1.1rem;color:var(--accent);opacity:0;transform:translateX(-6px);transition:all .2s;}
+.card-tag{display:inline-flex;align-items:center;gap:6px;background:var(--tag-bg);border-radius:4px;padding:3px 8px;font-family:var(--f-mono);font-size:.62rem;color:var(--muted);letter-spacing:1px;text-transform:uppercase;width:fit-content;}
+.card-tag .dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;}
+.card-siglas{font-family:var(--f-display);font-size:1.6rem;font-weight:800;color:var(--ink);letter-spacing:-.5px;line-height:1;}
+.card-nombre{font-size:.82rem;color:var(--muted);line-height:1.5;}
+.card-progress-bar{height:2px;background:var(--border);border-radius:99px;overflow:hidden;margin-top:auto;}
+.card-progress-fill{height:100%;border-radius:99px;transition:width .6s cubic-bezier(.4,0,.2,1);}
+.card-progress-meta{display:flex;justify-content:space-between;align-items:center;margin-top:.5rem;}
+.card-progress-label{font-family:var(--f-mono);font-size:.62rem;color:var(--muted);}
+.card-pct{font-family:var(--f-mono);font-size:.62rem;font-weight:500;}
+.modulo-card.test-card{background:var(--ink);}
+.modulo-card.test-card:hover{background:#1a1915;}
+.modulo-card.test-card .card-siglas{color:#fff;}
+.modulo-card.test-card .card-nombre{color:rgba(255,255,255,.45);}
+.modulo-card.test-card .card-tag{background:rgba(255,255,255,.08);color:rgba(255,255,255,.4);}
+.modulo-card.test-card .card-arrow{color:var(--accent);opacity:.5;}
+.modulo-card.test-card:hover .card-arrow{opacity:1;}
 
-        #grid-apuntes { 
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
-            gap: 1.5rem; padding: 2rem; max-width: 1200px; margin: auto;
-            padding-bottom: 180px; /* Espacio para la consola */
-        }
+/* TOOLS */
+#tools-strip{display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:3rem;}
+.tool-chip{display:flex;align-items:center;gap:.5rem;background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:.55rem 1rem;font-size:.78rem;font-weight:500;color:var(--ink2);cursor:pointer;transition:all .15s;}
+.tool-chip:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-l);}
+.tool-chip .ic{font-size:.9rem;}
 
-        .card { 
-            background: var(--card-bg); border: 1px solid var(--border);
-            border-radius: 12px; padding: 1.5rem; transition: 0.3s;
-            display: flex; flex-direction: column; justify-content: space-between;
-        }
-        .card:hover { border-color: var(--accent); transform: translateY(-3px); }
-        .card h2 { margin: 0.5rem 0; font-size: 1.3rem; }
-        .card p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem; }
+/* DASHBOARD */
+#dashboard-view{display:none;padding-bottom:160px;}
+.dash-topbar{display:flex;align-items:center;gap:1.5rem;padding:1.5rem 2rem;border-bottom:1px solid var(--border);max-width:1200px;margin:0 auto;}
+.dash-breadcrumb{font-family:var(--f-mono);font-size:.72rem;color:var(--muted);display:flex;align-items:center;gap:.5rem;}
+.dash-breadcrumb .sep{color:var(--border2);}
+.dash-breadcrumb .current{color:var(--ink);font-weight:500;}
+.back-btn{display:flex;align-items:center;gap:.4rem;background:transparent;border:1px solid var(--border2);border-radius:var(--radius-sm);padding:.45rem .9rem;font-size:.75rem;font-weight:500;color:var(--muted);cursor:pointer;transition:all .15s;}
+.back-btn:hover{border-color:var(--ink);color:var(--ink);}
+.dash-layout{display:grid;grid-template-columns:280px 1fr;height:calc(100vh - 130px);max-width:1200px;margin:0 auto;border:1px solid var(--border);border-top:none;overflow:hidden;background:var(--surface);box-shadow:var(--shadow);}
+.sidebar{border-right:1px solid var(--border);overflow-y:auto;padding:1rem;background:var(--surface2);display:flex;flex-direction:column;gap:2px;}
+.sidebar::-webkit-scrollbar{width:3px;}
+.sidebar::-webkit-scrollbar-thumb{background:var(--border2);border-radius:4px;}
+.unit-item{display:flex;align-items:flex-start;gap:.8rem;padding:.8rem .9rem;border-radius:var(--radius-sm);cursor:pointer;transition:background .12s;border:1px solid transparent;}
+.unit-item:hover{background:var(--surface);border-color:var(--border);}
+.unit-item.active{background:var(--surface);border-color:var(--accent);box-shadow:0 0 0 1px var(--accent);}
+.unit-check{width:18px;height:18px;min-width:18px;margin-top:1px;border-radius:4px;border:1.5px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:.6rem;cursor:pointer;transition:all .15s;flex-shrink:0;}
+.unit-check.done{background:var(--success);border-color:var(--success);color:#fff;}
+.unit-check:hover:not(.done){border-color:var(--accent);}
+.unit-text{display:flex;flex-direction:column;gap:2px;}
+.unit-num{font-family:var(--f-mono);font-size:.6rem;color:var(--muted);}
+.unit-title{font-size:.8rem;font-weight:500;color:var(--ink2);line-height:1.35;}
+.unit-item.active .unit-title{color:var(--ink);}
+.pdf-frame{background:#f0efe9;position:relative;overflow:hidden;}
+.pdf-placeholder{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:1rem;color:var(--muted);}
+.placeholder-icon{width:56px;height:56px;border-radius:var(--radius);background:var(--surface);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:1.5rem;}
+.pdf-placeholder p{font-family:var(--f-mono);font-size:.72rem;color:var(--muted);}
 
-        .btn { 
-            background: var(--accent); color: #fff; border: none; 
-            padding: 0.6rem 1rem; border-radius: 6px; cursor: pointer; 
-            font-weight: 700; font-size: 0.8rem;
-        }
+/* MODALES */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(15,14,11,.45);backdrop-filter:blur(6px);z-index:8000;align-items:center;justify-content:center;}
+.modal-overlay.active{display:flex;}
+.modal-box{background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:2rem;width:90%;max-width:440px;box-shadow:var(--shadow-md);animation:modalIn .2s ease both;}
+@keyframes modalIn{from{opacity:0;transform:translateY(10px) scale(.98);}to{opacity:1;transform:translateY(0) scale(1);}}
+.modal-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.5rem;}
+.modal-title{font-family:var(--f-display);font-weight:700;font-size:1.1rem;letter-spacing:-.3px;}
+.modal-subtitle{font-size:.78rem;color:var(--muted);margin-top:.2rem;}
+.modal-close{background:var(--tag-bg);border:none;border-radius:6px;width:28px;height:28px;cursor:pointer;font-size:.85rem;color:var(--muted);transition:all .15s;flex-shrink:0;}
+.modal-close:hover{background:var(--border);color:var(--ink);}
+.modal-input{width:100%;background:var(--bg);border:1px solid var(--border2);border-radius:var(--radius-sm);color:var(--ink);font-family:var(--f-mono);font-size:.82rem;padding:.7rem 1rem;margin-bottom:.75rem;transition:all .15s;}
+.modal-input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(26,86,240,.1);}
+.modal-input::placeholder{color:var(--muted);}
+.modal-result{margin-top:1rem;padding:1rem;background:var(--bg);border-radius:var(--radius-sm);font-family:var(--f-mono);font-size:.73rem;line-height:2;border:1px solid var(--border);display:none;}
+.modal-result.visible{display:block;}
+.res-key{color:var(--muted);}
+.res-val{color:var(--accent);font-weight:500;}
+.res-row{display:flex;justify-content:space-between;padding:2px 0;border-bottom:1px solid var(--border);}
+.res-row:last-child{border:none;}
 
-        /* Dashboard & Sidebar */
-        .dashboard-container { display: grid; grid-template-columns: 280px 1fr; height: calc(100vh - 150px); }
-        .sidebar { background: #050505; border-right: 1px solid var(--border); padding: 1.5rem; overflow-y: auto; }
-        .unit-item { 
-            padding: 0.8rem; margin-bottom: 0.5rem; border-radius: 8px;
-            background: #111; border: 1px solid #222; cursor: pointer; font-size: 0.85rem;
-        }
-        .unit-item:hover { border-color: var(--accent); }
+/* TEST */
+#test-modal .modal-box{max-width:520px;}
+.test-progress-bar{height:3px;background:var(--border);border-radius:99px;overflow:hidden;margin-bottom:1.5rem;}
+.test-progress-fill{height:100%;background:var(--accent);border-radius:99px;transition:width .35s ease;}
+.test-meta{font-family:var(--f-mono);font-size:.65rem;color:var(--muted);display:flex;justify-content:space-between;margin-bottom:.6rem;}
+.test-q{font-size:1rem;font-weight:600;line-height:1.45;color:var(--ink);margin-bottom:1.2rem;}
+.test-opciones{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-bottom:1rem;}
+.test-opcion{background:var(--bg);border:1.5px solid var(--border2);border-radius:var(--radius-sm);padding:.75rem;font-size:.8rem;font-weight:500;cursor:pointer;transition:all .12s;text-align:left;color:var(--ink2);}
+.test-opcion:hover:not(:disabled){border-color:var(--accent);background:var(--accent-l);color:var(--accent);}
+.test-opcion.correct{border-color:var(--success);background:rgba(10,122,76,.06);color:var(--success);}
+.test-opcion.wrong{border-color:var(--danger);background:rgba(201,36,63,.06);color:var(--danger);}
+.test-feedback{font-family:var(--f-mono);font-size:.75rem;padding:.65rem .9rem;border-radius:var(--radius-sm);margin-bottom:1rem;display:none;}
+.test-feedback.show{display:block;}
+.test-feedback.ok{background:rgba(10,122,76,.06);color:var(--success);border:1px solid rgba(10,122,76,.2);}
+.test-feedback.fail{background:rgba(201,36,63,.06);color:var(--danger);border:1px solid rgba(201,36,63,.2);}
+.test-footer{display:flex;align-items:center;justify-content:space-between;}
+.test-score-badge{font-family:var(--f-mono);font-size:.68rem;color:var(--muted);}
 
-        #visor-pdf { background: #000; overflow: hidden; position: relative; }
+/* TOAST */
+#toast-container{position:fixed;top:72px;right:1.5rem;z-index:9000;display:flex;flex-direction:column;gap:.5rem;}
+.toast{background:var(--ink);color:#fff;border-radius:var(--radius);padding:.9rem 1.2rem;min-width:260px;max-width:320px;box-shadow:var(--shadow-md);animation:toastIn .28s ease,toastOut .3s ease 3.7s forwards;}
+.toast-cat{font-family:var(--f-mono);font-size:.6rem;color:var(--accent);margin-bottom:.4rem;letter-spacing:1px;}
+.toast-msg{font-size:.82rem;line-height:1.4;color:rgba(255,255,255,.85);}
+@keyframes toastIn{from{opacity:0;transform:translateX(110%);}to{opacity:1;transform:translateX(0);}}
+@keyframes toastOut{to{opacity:0;transform:translateX(110%);}}
 
-        /* Consola de Logs */
-        #console-logs {
-            position: fixed; bottom: 0; left: 0; right: 0;
-            height: 140px; background: #050505; border-top: 1px solid var(--border);
-            font-family: 'monospace'; font-size: 0.75rem; padding: 1rem;
-            color: var(--success); overflow-y: auto; z-index: 5000;
-        }
+/* LOG BAR */
+#log-bar{position:fixed;bottom:0;left:0;right:0;background:rgba(244,243,239,.96);border-top:1px solid var(--border);backdrop-filter:blur(10px);z-index:400;height:120px;overflow:hidden;transition:height .25s ease;}
+#log-bar.collapsed{height:36px;}
+.log-topbar{display:flex;align-items:center;gap:.75rem;padding:0 1.5rem;height:36px;cursor:pointer;border-bottom:1px solid var(--border);font-family:var(--f-mono);font-size:.67rem;color:var(--muted);user-select:none;}
+.log-topbar .log-dot{width:6px;height:6px;border-radius:50%;background:var(--success);}
+.log-toggle-label{margin-left:auto;font-size:.65rem;}
+#log-body{padding:.4rem 1.5rem;overflow-y:auto;height:calc(120px - 36px);}
+#log-body::-webkit-scrollbar{width:3px;}
+#log-body::-webkit-scrollbar-thumb{background:var(--border2);}
+.log-line{font-family:var(--f-mono);font-size:.67rem;color:var(--muted);line-height:1.9;}
+.log-line .ts{color:var(--border2);margin-right:.6rem;}
+.log-line .arrow{color:var(--accent);margin-right:.4rem;}
 
-        /* Modal Calculadora */
-        #modal-calc {
-            display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%);
-            background:var(--card-bg); border:1px solid var(--accent); padding:2rem;
-            border-radius:12px; z-index:6000; width: 350px;
-        }
-        #modal-calc input { background: #000; border: 1px solid #333; color: #fff; padding: 0.5rem; width: 90%; }
-    </style>
+@media(max-width:900px){
+  #hero{grid-template-columns:1fr;gap:2rem;padding:3rem 1.5rem;}
+  .hero-stats{flex-direction:row;flex-wrap:wrap;}
+  .stat-card{flex:1;min-width:140px;}
+  .stat-card:nth-child(2){margin-left:0;}
+  #main-view{padding:0 1.5rem 160px;}
+  .dash-layout{grid-template-columns:1fr;height:auto;}
+  .sidebar{height:200px;}
+  #topbar-meta{display:none;}
+}
+</style>
 </head>
 <body>
-    <header>
-        <div id="system-status">
-            <span>SYS_READY</span>
-            <span>TIEMPO_SESIÓN: <span id="uptime-clock">00:00:00</span></span>
-            <span>DB_VERSION: 5.0</span>
+
+<nav id="topbar">
+  <div class="logo-mark"><div class="logo-dot"></div>S.I.L.V.A. ACADEMY</div>
+  <div id="topbar-meta">
+    <span class="live">ONLINE</span>
+    <span id="uptime-display">00:00:00</span>
+    <span>ASIR · 1º CURSO</span>
+  </div>
+  <div id="search-wrap">
+    <input id="buscador" type="text" placeholder="buscar módulo / definición..." autocomplete="off" spellcheck="false">
+  </div>
+</nav>
+
+<div id="toast-container"></div>
+
+<section id="hero">
+  <div class="hero-content">
+    <div class="hero-label">Plataforma académica · Sistema Integrado</div>
+    <h1 class="hero-title">Gestión de<br>Contenidos <em>ASIR</em></h1>
+    <p class="hero-sub">Accede a tus temarios, practica con el simulador de examen y controla tu progreso en todos los módulos del ciclo.</p>
+    <div class="hero-actions">
+      <button class="btn-primary" onclick="document.getElementById('main-view').scrollIntoView({behavior:'smooth'})">Ver módulos</button>
+      <button class="btn-ghost" onclick="iniciarTest()">Simulador de examen →</button>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat-card"><div class="stat-num">5</div><div class="stat-label">Módulos disponibles</div></div>
+    <div class="stat-card"><div class="stat-num" id="stat-unidades">26</div><div class="stat-label">Unidades didácticas</div></div>
+    <div class="stat-card"><div class="stat-num" id="stat-progreso">0%</div><div class="stat-label">Progreso global</div></div>
+  </div>
+</section>
+
+<div id="main-view">
+  <div class="section-header">
+    <div class="section-title">Módulos</div>
+    <div class="section-count" id="modulos-count">5 módulos</div>
+  </div>
+  <div id="modulos-grid"></div>
+  <div class="section-header">
+    <div class="section-title">Herramientas</div>
+  </div>
+  <div id="tools-strip">
+    <button class="tool-chip" onclick="abrirCalc()"><span class="ic">⊞</span> Calculadora IP</button>
+    <button class="tool-chip" onclick="iniciarTest()"><span class="ic">▶</span> Simulador Test</button>
+    <button class="tool-chip" onclick="toggleLog()"><span class="ic">☰</span> Consola de logs</button>
+    <button class="tool-chip" onclick="limpiarProgreso()"><span class="ic">↺</span> Limpiar progreso</button>
+  </div>
+</div>
+
+<div id="dashboard-view">
+  <div class="dash-topbar">
+    <button class="back-btn" onclick="volverPortada()">← Módulos</button>
+    <div class="dash-breadcrumb">
+      <span>ASIR 1º</span><span class="sep">/</span>
+      <span class="current" id="dash-breadcrumb-name">─</span>
+    </div>
+  </div>
+  <div class="dash-layout">
+    <div class="sidebar" id="sidebar-unidades"></div>
+    <div class="pdf-frame" id="pdf-frame">
+      <div class="pdf-placeholder">
+        <div class="placeholder-icon">▤</div>
+        <p>Selecciona una unidad para visualizar el PDF</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL CALC -->
+<div class="modal-overlay" id="calc-modal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div><div class="modal-title">Calculadora de Subredes</div><div class="modal-subtitle">Planificación y Administración de Redes · PAR</div></div>
+      <button class="modal-close" onclick="cerrarModal('calc-modal')">✕</button>
+    </div>
+    <input class="modal-input" id="ip-input" type="text" placeholder="192.168.1.0/24" autocomplete="off">
+    <button class="btn-primary" style="width:100%;padding:.75rem" onclick="ejecutarCalculo()">Calcular</button>
+    <div class="modal-result" id="calc-result"></div>
+  </div>
+</div>
+
+<!-- MODAL TEST -->
+<div class="modal-overlay" id="test-modal">
+  <div class="modal-box" style="max-width:520px">
+    <div class="modal-header">
+      <div><div class="modal-title">Simulador de Examen</div><div class="modal-subtitle">10 preguntas aleatorias · Multiopción</div></div>
+      <button class="modal-close" onclick="cerrarModal('test-modal')">✕</button>
+    </div>
+    <div class="test-progress-bar"><div class="test-progress-fill" id="test-prog-fill"></div></div>
+    <div class="test-meta"><span id="test-cat-label">─</span><span id="test-score-label">0 / 0</span></div>
+    <div class="test-q" id="test-q">─</div>
+    <div class="test-opciones" id="test-opciones"></div>
+    <div class="test-feedback" id="test-feedback"></div>
+    <div class="test-footer">
+      <div class="test-score-badge" id="test-badge"></div>
+      <button class="btn-primary" id="btn-siguiente" onclick="siguientePregunta()" style="display:none;padding:.6rem 1.2rem;font-size:.8rem">Siguiente →</button>
+    </div>
+  </div>
+</div>
+
+<!-- LOG BAR -->
+<div id="log-bar" class="collapsed">
+  <div class="log-topbar" onclick="toggleLog()">
+    <div class="log-dot"></div>
+    <span>Monitor de actividad</span>
+    <span class="log-toggle-label" id="log-toggle-lbl">▲ expandir</span>
+  </div>
+  <div id="log-body"></div>
+</div>
+
+<script>
+const COLORES={PAR:'#1a56f0',GBD:'#7c3aed',FH:'#0a7a4c',LMSGI:'#b85c00',ISO:'#c9243f'};
+const MODULOS=[
+  {siglas:'PAR',nombre:'Planificación y Administración de Redes'},
+  {siglas:'GBD',nombre:'Gestión de Bases de Datos'},
+  {siglas:'FH',nombre:'Fundamentos de Hardware'},
+  {siglas:'LMSGI',nombre:'Lenguaje de Marcas y Sistemas de Gestión'},
+  {siglas:'ISO',nombre:'Implantación de Sistemas Operativos'},
+];
+const UNIDADES={
+  PAR:{carpeta:'Redes',lista:[
+    {id:1,t:'Caracterización de Redes',f:'ud1_caracterizacionRedes%20(1).pdf'},
+    {id:2,t:'Modelo OSI y TCP/IP',f:'ud2_modelosOSI-TCPIP%20(1).pdf'},
+    {id:3,t:'Direccionamiento IP',f:'ud3_direccionamientoIP%20(1).pdf'},
+    {id:4,t:'Tecnología Inalámbrica',f:'ud4_tecnologiaInalambrica.pdf'},
+    {id:5,t:'Switching (Cisco)',f:'ud5_switchesCisco.pdf'},
+    {id:6,t:'Routing (Cisco)',f:'ud6_routerCisco.pdf'},
+  ]},
+  GBD:{carpeta:'Base de Datos',lista:[
+    {id:1,t:'DDL y SQL Intro',f:'ud1_DDL.pdf'},
+    {id:2,t:'Comandos SQL',f:'ud2_comandosSQL.pdf'},
+    {id:3,t:'Consultas SELECT',f:'ud3_consultas.pdf'},
+    {id:4,t:'Subconsultas y Joins',f:'ud4_subConsultas.pdf'},
+    {id:5,t:'Programación BBDD',f:'ud5_programacion.pdf'},
+  ]},
+  FH:{carpeta:'Hardware',lista:[
+    {id:1,t:'Sistemas Informáticos',f:'ud1_sistemas_informaticos.pdf'},
+    {id:2,t:'Representación de Información',f:'ud2_representacion_comunicacion.pdf'},
+    {id:3,t:'Arquitectura PC',f:'ud3_arquitectura_ordenador.pdf'},
+    {id:4,t:'Componentes del Ordenador',f:'ud4_componentesOrdenador.pdf'},
+    {id:5,t:'RAID, SAI y CPD',f:'ud5_CPD-Servidor-RAID-SAI.pdf'},
+  ]},
+  LMSGI:{carpeta:'Lenguaje de Marcas',lista:[
+    {id:1,t:'XML y DTD',f:'ud1_XML.pdf'},
+    {id:2,t:'XPath y XQuery',f:'ud2_xpathXquery.pdf'},
+    {id:3,t:'HTML5 Profesional',f:'ud3_HTML.pdf'},
+    {id:4,t:'CSS3 Estilos',f:'ud4_css.pdf'},
+    {id:5,t:'Sindicación RSS/JS',f:'ud5_javascript.pdf'},
+  ]},
+  ISO:{carpeta:'Sistemas',lista:[
+    {id:1,t:'Introducción a S.O.',f:'ud1_intro.pdf'},
+    {id:2,t:'Instalación y Config.',f:'ud2_instalacion.pdf'},
+    {id:3,t:'Administración Linux',f:'ud3_linux.pdf'},
+    {id:4,t:'Administración Windows',f:'ud4_windows.pdf'},
+    {id:5,t:'Seguridad del Sistema',f:'ud5_seguridad.pdf'},
+  ]},
+};
+const DICCIONARIO={
+  'ping':{d:'ICMP: Comprueba conectividad y latencia entre nodos de red.',c:'PAR'},
+  'dhcp':{d:'Protocolo de configuración dinámica. Asigna IPs automáticamente.',c:'PAR'},
+  'dns':{d:'Sistema de Nombres de Dominio. Traduce nombres a IPs.',c:'PAR'},
+  'nat':{d:'Traducción de Direcciones de Red. Oculta IPs privadas.',c:'PAR'},
+  'ssh':{d:'Secure Shell. Acceso remoto cifrado. Puerto TCP 22.',c:'PAR'},
+  'vlan':{d:'Red de Área Local Virtual. Segmentación lógica de la red.',c:'PAR'},
+  'chmod':{d:'Linux: Modifica permisos (Lectura/Escritura/Ejecución).',c:'ISO'},
+  'chown':{d:'Linux: Cambia el propietario y grupo de un archivo.',c:'ISO'},
+  'grep':{d:'Linux: Busca patrones de texto con expresiones regulares.',c:'ISO'},
+  'select':{d:'SQL: Sentencia DML para recuperar registros de una tabla.',c:'GBD'},
+  'join':{d:'SQL: Combina filas de tablas según condición relacionada.',c:'GBD'},
+  'truncate':{d:'SQL: Elimina todos los registros sin borrar la estructura.',c:'GBD'},
+  'primary key':{d:'Restricción que identifica unívocamente cada fila.',c:'GBD'},
+  'xml':{d:'eXtensible Markup Language. Marcado para transporte de datos.',c:'LMSGI'},
+  'xpath':{d:'Lenguaje para navegar y consultar nodos en XML.',c:'LMSGI'},
+  'rss':{d:'Really Simple Syndication. Formato XML para sindicación.',c:'LMSGI'},
+  'raid 0':{d:'Striping sin redundancia. Máximo rendimiento.',c:'FH'},
+  'raid 1':{d:'Espejo (mirroring). Duplicado exacto. Mínimo 2 discos.',c:'FH'},
+  'raid 5':{d:'Paridad distribuida. Tolera 1 fallo. Mínimo 3 discos.',c:'FH'},
+  'sai':{d:'Sistema de Alimentación Ininterrumpida (UPS).',c:'FH'},
+  'cpd':{d:'Centro de Procesamiento de Datos. Infraestructura central.',c:'FH'},
+  'calc':{d:'Abriendo calculadora de subredes…',c:'TOOL',fn:()=>abrirCalc()},
+  'test':{d:'Iniciando simulador de examen…',c:'TOOL',fn:()=>iniciarTest()},
+  'limpiar':{d:'Purgando progreso guardado.',c:'TOOL',fn:()=>limpiarProgreso()},
+};
+const PREGUNTAS=[
+  {q:'¿En qué capa OSI operan los Routers?',a:'Capa 3 (Red)',ops:['Capa 1 (Física)','Capa 2 (Enlace)','Capa 3 (Red)','Capa 4 (Transporte)'],cat:'PAR'},
+  {q:'¿Qué protocolo asigna IPs automáticamente?',a:'DHCP',ops:['DNS','NAT','DHCP','ARP'],cat:'PAR'},
+  {q:'¿Puerto por defecto de HTTPS?',a:'443',ops:['80','21','443','8443'],cat:'PAR'},
+  {q:'¿Máscara /24 en notación decimal?',a:'255.255.255.0',ops:['255.255.0.0','255.255.255.0','255.0.0.0','255.255.255.128'],cat:'PAR'},
+  {q:'¿Puerto del protocolo SSH?',a:'22',ops:['22','23','25','3389'],cat:'PAR'},
+  {q:'¿Protocolo de correo entrante que descarga mensajes?',a:'POP3',ops:['SMTP','IMAP','POP3','FTP'],cat:'PAR'},
+  {q:'¿Comando Linux para mostrar el directorio actual?',a:'pwd',ops:['cd','ls','pwd','whoami'],cat:'ISO'},
+  {q:'¿Directorio de configuración global en Linux?',a:'/etc',ops:['/usr','/var','/etc','/home'],cat:'ISO'},
+  {q:'¿Comando para ver procesos en tiempo real?',a:'top',ops:['ps','jobs','top','pstree'],cat:'ISO'},
+  {q:'¿Símbolo del prompt del usuario root?',a:'#',ops:['$','@','#','%'],cat:'ISO'},
+  {q:'¿Comando para crear un directorio en Linux?',a:'mkdir',ops:['touch','mkdir','mkfile','newdir'],cat:'ISO'},
+  {q:'¿Sentencia SQL para eliminar una tabla completa?',a:'DROP TABLE',ops:['DELETE','TRUNCATE','DROP TABLE','REMOVE TABLE'],cat:'GBD'},
+  {q:'¿Cláusula SQL para filtrar resultados?',a:'WHERE',ops:['HAVING','WHERE','FILTER','GROUP BY'],cat:'GBD'},
+  {q:'¿Propiedad ACID: transacciones indivisibles?',a:'Atomicidad',ops:['Consistencia','Aislamiento','Durabilidad','Atomicidad'],cat:'GBD'},
+  {q:'¿Sentencia para añadir registros a una tabla?',a:'INSERT INTO',ops:['ADD','PUSH','INSERT INTO','APPEND'],cat:'GBD'},
+  {q:'¿Sentencia SQL para modificar registros existentes?',a:'UPDATE',ops:['MODIFY','CHANGE','EDIT','UPDATE'],cat:'GBD'},
+  {q:'¿Etiqueta HTML para listas ordenadas?',a:'<ol>',ops:['<ul>','<li>','<ol>','<dl>'],cat:'LMSGI'},
+  {q:'¿Qué significan las siglas XML?',a:'eXtensible Markup Language',ops:['Extra Markup Language','eXtensible Markup Language','Extended Meta Language','eXtra Modular List'],cat:'LMSGI'},
+  {q:'¿Atributo HTML para el destino de un enlace?',a:'href',ops:['src','link','href','action'],cat:'LMSGI'},
+  {q:'¿Lenguaje de consulta de nodos XML?',a:'XPath',ops:['XQuery','XSLT','XPath','XLink'],cat:'LMSGI'},
+  {q:'¿Nivel de RAID denominado Espejo?',a:'RAID 1',ops:['RAID 0','RAID 1','RAID 5','RAID 6'],cat:'FH'},
+  {q:'¿Qué tipo de memoria es volátil?',a:'RAM',ops:['ROM','HDD','SSD','RAM'],cat:'FH'},
+  {q:'¿Sistema numérico de base 16?',a:'Hexadecimal',ops:['Octal','Binario','Hexadecimal','Decimal'],cat:'FH'},
+  {q:'¿RAID con paridad distribuida y mínimo 3 discos?',a:'RAID 5',ops:['RAID 0','RAID 1','RAID 5','RAID 10'],cat:'FH'},
+  {q:'¿Siglas de la Unidad Central de Procesamiento?',a:'CPU',ops:['GPU','RAM','CPU','ALU'],cat:'FH'},
+];
+
+let progreso={},logCollapsed=true,moduloActivo=null,unidadActiva=null;
+let testPregs=[],testIdx=0,testAciertos=0,testRespondida=false;
+
+function init(){
+  cargarProgreso();renderPortada();iniciarReloj();initBuscador();actualizarStats();
+  addLog('SILVA Academy inicializado correctamente.');
+  const totalU=Object.values(UNIDADES).reduce((a,u)=>a+u.lista.length,0);
+  addLog(`Banco: ${PREGUNTAS.length} preguntas · ${totalU} unidades didácticas.`);
+}
+
+function iniciarReloj(){
+  const t0=Date.now();
+  setInterval(()=>{
+    const s=Math.floor((Date.now()-t0)/1000);
+    const el=document.getElementById('uptime-display');
+    if(el)el.textContent=[Math.floor(s/3600),Math.floor((s%3600)/60),s%60].map(n=>String(n).padStart(2,'0')).join(':');
+  },1000);
+}
+
+function addLog(msg){
+  const body=document.getElementById('log-body');if(!body)return;
+  const d=document.createElement('div');d.className='log-line';
+  d.innerHTML=`<span class="ts">[${new Date().toLocaleTimeString()}]</span><span class="arrow">›</span>${msg}`;
+  body.appendChild(d);
+  const bar=document.getElementById('log-bar');if(bar)bar.scrollTop=bar.scrollHeight;
+}
+
+function toggleLog(){
+  logCollapsed=!logCollapsed;
+  document.getElementById('log-bar').classList.toggle('collapsed',logCollapsed);
+  document.getElementById('log-toggle-lbl').textContent=logCollapsed?'▲ expandir':'▼ colapsar';
+}
+
+function toast(msg,cat='INFO'){
+  const c=document.getElementById('toast-container');
+  const t=document.createElement('div');t.className='toast';
+  t.innerHTML=`<div class="toast-cat">[${cat}]</div><div class="toast-msg">${msg}</div>`;
+  c.appendChild(t);setTimeout(()=>t.remove(),4200);
+}
+
+function initBuscador(){
+  document.getElementById('buscador').addEventListener('input',e=>{
+    const val=e.target.value.toLowerCase().trim();
+    const cmd=DICCIONARIO[val];
+    if(cmd){toast(cmd.d,cmd.c);addLog(`[${cmd.c}] ${cmd.d}`);if(cmd.fn)setTimeout(cmd.fn,250);return;}
+    if(val.length<1){renderPortada();return;}
+    renderPortada(MODULOS.filter(m=>m.siglas.toLowerCase().includes(val)||m.nombre.toLowerCase().includes(val)));
+  });
+}
+
+function actualizarStats(){
+  const total=Object.values(UNIDADES).reduce((a,u)=>a+u.lista.length,0);
+  const hechas=Object.keys(progreso).filter(k=>progreso[k]).length;
+  const pct=total?Math.round((hechas/total)*100):0;
+  const el=document.getElementById('stat-progreso');if(el)el.textContent=pct+'%';
+  const eu=document.getElementById('stat-unidades');if(eu)eu.textContent=total;
+}
+
+function renderPortada(lista=MODULOS){
+  document.getElementById('main-view').style.display='block';
+  document.getElementById('hero').style.display='grid';
+  document.getElementById('dashboard-view').style.display='none';
+  document.getElementById('modulos-count').textContent=`${lista.length} módulo${lista.length!==1?'s':''}`;
+  const grid=document.getElementById('modulos-grid');
+  grid.innerHTML=lista.map((m,i)=>{
+    const data=UNIDADES[m.siglas]?.lista||[];
+    const total=data.length;
+    const hechas=data.filter(u=>progreso[`${m.siglas}-${u.id}`]).length;
+    const pct=total?Math.round((hechas/total)*100):0;
+    const color=COLORES[m.siglas]||'#1a56f0';
+    return `<article class="modulo-card" style="animation-delay:${i*60}ms" onclick="abrirModulo('${m.siglas}')">
+      <div class="card-arrow">→</div>
+      <div>
+        <div class="card-tag"><span class="dot" style="background:${color}"></span>MÓDULO ${m.siglas}</div>
+        <div class="card-siglas" style="color:${color};margin-top:.6rem">${m.siglas}</div>
+        <div class="card-nombre" style="margin-top:.3rem">${m.nombre}</div>
+      </div>
+      <div>
+        <div class="card-progress-meta">
+          <span class="card-progress-label">${hechas} de ${total} unidades</span>
+          <span class="card-pct" style="color:${pct===100?'var(--success)':'var(--muted)'}">${pct}%</span>
         </div>
-        <div class="logo">S.I.L.V.A.<span style="color:var(--accent)">_ACADEMY</span></div>
-        <input type="text" id="buscador" placeholder="Escribe 'calc', 'logs' o busca materia...">
-    </header>
+        <div class="card-progress-bar" style="margin-top:.4rem">
+          <div class="card-progress-fill" style="width:${pct}%;background:${color}"></div>
+        </div>
+      </div>
+    </article>`;
+  }).join('')+`
+    <article class="modulo-card test-card" style="animation-delay:${lista.length*60}ms" onclick="iniciarTest()">
+      <div class="card-arrow" style="opacity:.5">→</div>
+      <div>
+        <div class="card-tag">HERRAMIENTA</div>
+        <div class="card-siglas" style="margin-top:.6rem">TEST</div>
+        <div class="card-nombre" style="margin-top:.3rem">Simulador multiopción · ${PREGUNTAS.length} preguntas de examen</div>
+      </div>
+      <div class="card-progress-label" style="margin-top:auto">10 aleatorias por sesión · Resultado inmediato</div>
+    </article>`;
+}
 
-    <main id="grid-apuntes"></main>
+function abrirModulo(siglas){
+  moduloActivo=siglas;
+  const m=MODULOS.find(x=>x.siglas===siglas);
+  const data=UNIDADES[siglas];
+  document.getElementById('main-view').style.display='none';
+  document.getElementById('hero').style.display='none';
+  document.getElementById('dashboard-view').style.display='block';
+  document.getElementById('dash-breadcrumb-name').textContent=`${siglas} — ${m.nombre}`;
+  renderSidebar(siglas,data);
+  document.getElementById('pdf-frame').innerHTML=`<div class="pdf-placeholder"><div class="placeholder-icon" style="color:${COLORES[siglas]}">▤</div><p>Selecciona una unidad para visualizar el PDF</p></div>`;
+  addLog(`Módulo ${siglas} abierto. ${data.lista.length} unidades disponibles.`);
+}
 
-    <div id="console-logs">
-        <div style="color:var(--accent); margin-bottom:5px;">-- SISTEMA DE LOGS DE ACTIVIDAD --</div>
-    </div>
+function renderSidebar(siglas,data){
+  document.getElementById('sidebar-unidades').innerHTML=data.lista.map(u=>{
+    const uid=`${siglas}-${u.id}`;
+    const done=!!progreso[uid];
+    const active=unidadActiva===uid;
+    return `<div class="unit-item ${active?'active':''}" onclick="abrirUnidad('${siglas}','${u.id}','${data.carpeta}','${u.f}','${u.t.replace(/'/g,"\\'")}')">
+      <div class="unit-check ${done?'done':''}" onclick="event.stopPropagation();toggleProgreso('${uid}','${siglas}')">${done?'✓':''}</div>
+      <div class="unit-text"><div class="unit-num">UNIDAD ${u.id}</div><div class="unit-title">${u.t}</div></div>
+    </div>`;
+  }).join('');
+}
 
-    <div id="modal-calc">
-        <h3 style="margin-top:0">Calculadora Subredes (PAR)</h3>
-        <p style="font-size:0.8rem; color:var(--text-muted)">Introduce IP/Máscara (ej: 192.168.1.0/24)</p>
-        <input type="text" id="ip-input" placeholder="192.168.1.0/24">
-        <button onclick="ejecutarCalculo()" class="btn" style="margin-top:10px; width:100%">Calcular</button>
-        <div id="calc-result" style="margin-top:1rem; font-family:monospace; font-size:0.75rem; border-top:1px solid #222; padding-top:10px;"></div>
-        <button onclick="document.getElementById('modal-calc').style.display='none'" class="btn" style="background:#333; margin-top:10px; width:100%">Cerrar</button>
-    </div>
+function abrirUnidad(siglas,id,carpeta,archivo,titulo){
+  unidadActiva=`${siglas}-${id}`;
+  renderSidebar(siglas,UNIDADES[siglas]);
+  addLog(`Cargando: ${titulo}`);
+  document.getElementById('pdf-frame').innerHTML=`<embed src="./${carpeta}/${archivo}" type="application/pdf" width="100%" height="100%">`;
+}
 
-    <script src="main.js"></script>
+function volverPortada(){
+  unidadActiva=null;moduloActivo=null;
+  document.getElementById('main-view').style.display='block';
+  document.getElementById('hero').style.display='grid';
+  document.getElementById('dashboard-view').style.display='none';
+  renderPortada();
+}
+
+function cargarProgreso(){try{progreso=JSON.parse(localStorage.getItem('silva_progreso')||'{}');}catch{progreso={};}}
+function guardarProgreso(){try{localStorage.setItem('silva_progreso',JSON.stringify(progreso));}catch{}}
+function toggleProgreso(uid,siglas){
+  progreso[uid]=!progreso[uid];guardarProgreso();
+  renderSidebar(siglas,UNIDADES[siglas]);actualizarStats();
+  addLog(`${uid}: ${progreso[uid]?'completada':'pendiente'}`);
+}
+function limpiarProgreso(){
+  if(!confirm('¿Borrar todo el progreso guardado?'))return;
+  progreso={};guardarProgreso();renderPortada();actualizarStats();addLog('Progreso purgado.');
+}
+
+function abrirCalc(){
+  document.getElementById('calc-modal').classList.add('active');
+  document.getElementById('calc-result').classList.remove('visible');
+  document.getElementById('ip-input').focus();
+  addLog('Calculadora de subredes abierta.');
+}
+
+function ejecutarCalculo(){
+  const input=document.getElementById('ip-input').value.trim();
+  const res=document.getElementById('calc-result');
+  const m=input.match(/^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})\/(\d{1,2})$/);
+  if(!m){res.innerHTML=`<span style="color:var(--danger)">Formato inválido. Usa: 192.168.1.0/24</span>`;res.classList.add('visible');return;}
+  const[,a,b,c,d,mask]=m.map(Number);
+  if([a,b,c,d].some(o=>o>255)||mask>32){res.innerHTML=`<span style="color:var(--danger)">Valores fuera de rango.</span>`;res.classList.add('visible');return;}
+  const total=Math.pow(2,32-mask);
+  const hosts=mask>=31?(mask===32?1:2):total-2;
+  const maskDec=[0,1,2,3].map(i=>{const bits=Math.min(8,Math.max(0,mask-i*8));return 256-Math.pow(2,8-bits);}).join('.');
+  const ipNum=((a<<24)|(b<<16)|(c<<8)|d)>>>0;
+  const maskNum=mask===0?0:(~0<<(32-mask))>>>0;
+  const netNum=(ipNum&maskNum)>>>0;
+  const bcast=(netNum|(~maskNum>>>0))>>>0;
+  const n2ip=n=>[(n>>>24)&255,(n>>>16)&255,(n>>>8)&255,n&255].join('.');
+  res.innerHTML=`
+    <div class="res-row"><span class="res-key">Dirección de Red</span><span class="res-val">${n2ip(netNum)}</span></div>
+    <div class="res-row"><span class="res-key">Broadcast</span><span class="res-val">${n2ip(bcast)}</span></div>
+    <div class="res-row"><span class="res-key">Máscara</span><span class="res-val">${maskDec}</span></div>
+    <div class="res-row"><span class="res-key">Rango de hosts</span><span class="res-val">${n2ip(netNum+1)} – ${n2ip(bcast-1)}</span></div>
+    <div class="res-row"><span class="res-key">Hosts útiles</span><span class="res-val">${(hosts<=0?0:hosts).toLocaleString('es-ES')}</span></div>
+    <div class="res-row"><span class="res-key">Prefijo CIDR</span><span class="res-val">/${mask}</span></div>`;
+  res.classList.add('visible');
+  addLog(`Subred: ${input} → ${hosts.toLocaleString('es-ES')} hosts útiles.`);
+}
+
+function iniciarTest(){
+  testPregs=[...PREGUNTAS].sort(()=>Math.random()-.5).slice(0,10);
+  testIdx=0;testAciertos=0;testRespondida=false;
+  document.getElementById('test-modal').classList.add('active');
+  document.getElementById('btn-siguiente').style.display='none';
+  document.getElementById('test-feedback').className='test-feedback';
+  renderPregunta();addLog('Simulador iniciado. 10 preguntas aleatorias.');
+}
+
+function renderPregunta(){
+  if(testIdx>=testPregs.length){finTest();return;}
+  const p=testPregs[testIdx];testRespondida=false;
+  document.getElementById('test-prog-fill').style.width=(testIdx/testPregs.length*100)+'%';
+  document.getElementById('test-cat-label').textContent=`[${p.cat}] · Pregunta ${testIdx+1} de ${testPregs.length}`;
+  document.getElementById('test-q').textContent=p.q;
+  document.getElementById('test-score-label').textContent=`Aciertos: ${testAciertos} / ${testIdx}`;
+  document.getElementById('test-badge').textContent='';
+  document.getElementById('test-feedback').className='test-feedback';
+  document.getElementById('btn-siguiente').style.display='none';
+  const ops=[...p.ops].sort(()=>Math.random()-.5);
+  document.getElementById('test-opciones').innerHTML=ops.map(o=>`<button class="test-opcion" onclick="responder(this,'${o.replace(/'/g,"\\'")}','${p.a.replace(/'/g,"\\'")}')"> ${o}</button>`).join('');
+}
+
+function responder(btn,elegida,correcta){
+  if(testRespondida)return;testRespondida=true;
+  document.querySelectorAll('.test-opcion').forEach(b=>{b.disabled=true;if(b.textContent.trim()===correcta)b.classList.add('correct');});
+  const fb=document.getElementById('test-feedback');
+  if(elegida===correcta){btn.classList.add('correct');fb.textContent='✓ Correcto';fb.className='test-feedback show ok';testAciertos++;addLog(`✓ "${testPregs[testIdx].q}"`);}
+  else{btn.classList.add('wrong');fb.textContent=`✗ Incorrecto. Correcto: ${correcta}`;fb.className='test-feedback show fail';addLog(`✗ "${testPregs[testIdx].q}"`);}
+  document.getElementById('btn-siguiente').style.display='block';
+}
+
+function siguientePregunta(){testIdx++;renderPregunta();}
+
+function finTest(){
+  const pct=Math.round((testAciertos/testPregs.length)*100);
+  const apto=pct>=50;
+  document.getElementById('test-cat-label').textContent='RESULTADO FINAL';
+  document.getElementById('test-q').textContent=`${testAciertos} de ${testPregs.length} preguntas correctas`;
+  document.getElementById('test-prog-fill').style.width='100%';
+  document.getElementById('test-score-label').textContent=`${pct}%`;
+  const badge=document.getElementById('test-badge');
+  badge.textContent=apto?'✓ APTO':'✗ NO APTO';
+  badge.style.color=apto?'var(--success)':'var(--danger)';
+  document.getElementById('test-feedback').className='test-feedback';
+  document.getElementById('btn-siguiente').style.display='none';
+  document.getElementById('test-opciones').innerHTML=`<button class="btn-primary" onclick="iniciarTest()" style="grid-column:1/-1;padding:.7rem">Repetir test</button>`;
+  addLog(`Test: ${testAciertos}/${testPregs.length} (${pct}%) — ${apto?'APTO':'NO APTO'}`);
+}
+
+function cerrarModal(id){document.getElementById(id).classList.remove('active');}
+document.querySelectorAll('.modal-overlay').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('active');}));
+document.getElementById('ip-input').addEventListener('keydown',e=>{if(e.key==='Enter')ejecutarCalculo();});
+window.addEventListener('DOMContentLoaded',init);
+</script>
 </body>
 </html>
